@@ -1,3 +1,17 @@
 html {
 	color: rgba(0, 0, 0, 0.8);
 }
+
+body {
+  padding-top: 50px;
+}
+
+.form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}

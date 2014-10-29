@@ -89,7 +89,7 @@ def shorts_put():
 			shortened_url = ''
 	return flask.render_template(
             'output.html', prefix = prefix,
-            url=shortened_url)
+            urllist=shortened_url.split())
 
 
 if __name__ == "__main__":

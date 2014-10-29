@@ -10,9 +10,34 @@ from contextlib import closing
 from db import *
 from jinja2 import TemplateNotFound
 from flask import abort
+import time
+import math
 
 app = flask.Flask(__name__)
 app.debug = True
+
+def get_url_from_timestamp():
+	tt = int(time.time())		
+	digits = []
+	while tt > 0:
+  		remainder = tt % 52
+  		digits.append(remainder)
+  		tt = tt / 52
+  	print digits
+	digits.reverse()
+	print "after rev:", digits
+	letters = []
+	for d in digits:
+		ascii_code = ''
+		if d > 26:
+			ascii_code = 65 + (d-26)
+		else:
+			ascii_code = 97 + d
+		letters.append(str(unichr(ascii_code)))
+
+	surl = ''.join(letters)
+	print surl
+	return surl
 
 @app.route('/')
 def landing_page():
@@ -36,6 +61,8 @@ def shorts_get(short_url):
 def shorts_put():
 	long_url=request.form.get('longURL')
 	short_url=request.form.get('shortURL')
+	if short_url=='':
+		short_url = get_url_from_timestamp()
 	shortened_url="http://127.0.0.1:5000/server/shorts/"+short_url
 	ret_type = addurltodb(short_url, long_url)
 	prefix = ''

@@ -2,14 +2,14 @@ import sqlite3
 from flask import g
 
 # Helper function to check if a short url exists in db.
-def checkifexists(ip_shorturl):
+def getallentries(ip_longurl):
 	conn = sqlite3.connect("dbase/shorten.db")
 	c = conn.cursor()
-	query='select * from urls where shorturl = ?'
-	c.execute(query, ip_shorturl)
-	if len(c.fetchall()):
-		return True
-	return False
+	query = 'select shorturl from urls where longurl = ?'
+	tup = [(ip_longurl)]
+	c.execute(query, tup)
+	result = [t[0] for t in c.fetchall()]
+	return result
 
 # Helper function without dbopen and close
 def ifexists(conn,ip_shorturl):

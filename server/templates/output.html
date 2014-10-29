@@ -8,7 +8,11 @@
 	<body>
 		<div class="container">
 			<span> {{prefix}} </span>
-			<a href={{ url }}> {{url}} </a>
+			{% for url in urllist %}
+			<div>
+				<a href={{ url }}> {{url}} </a>
+			</div>
+			{% endfor %}
 		</div>
 	</body>
 </html>

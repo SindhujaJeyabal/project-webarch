@@ -15,6 +15,7 @@ import math
 
 app = flask.Flask(__name__)
 app.debug = True
+ROOT_URL = "http://127.0.0.1:5000/server/shorts/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())		
@@ -61,9 +62,19 @@ def shorts_get(short_url):
 def shorts_put():
 	long_url=request.form.get('longURL')
 	short_url=request.form.get('shortURL')
-	if short_url=='':
-		short_url = get_url_from_timestamp()
-	shortened_url="http://127.0.0.1:5000/server/shorts/"+short_url
+	if short_url == '':
+		db_entries = getallentries(long_url)
+		db_entries = [ROOT_URL + url for url in db_entries]
+		
+		if len(db_entries) == 0:
+			short_url = get_url_from_timestamp()
+		else:
+			prefix = "URL pair is already matched"
+			return flask.render_template(
+            'output.html', prefix = prefix,
+            urllist= db_entries)
+
+	shortened_url = ROOT_URL + short_url
 	ret_type = addurltodb(short_url, long_url)
 	prefix = ''
 	if ret_type:

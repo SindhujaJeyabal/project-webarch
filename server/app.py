@@ -18,7 +18,7 @@ app.debug = True
 ROOT_URL = "http://127.0.0.1:5000/server/shorts/"
 
 def get_url_from_timestamp():
-	tt = int(time.time())		
+	tt = int(time.time())
 	digits = []
 	while tt > 0:
   		remainder = tt % 52
@@ -47,7 +47,7 @@ def landing_page():
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return flask.render_template('output.html', prefix = "URL not found", url=''), 404
+	return flask.render_template('404.html', prefix = "URL not found", url=''), 404
 
 @app.route('/server/shorts/<short_url>')
 def shorts_get(short_url):
@@ -69,7 +69,7 @@ def shorts_put():
 	if short_url == '':
 		db_entries = getallentries(long_url)
 		db_entries = [ROOT_URL + url for url in db_entries]
-		
+
 		if len(db_entries) == 0:
 			short_url = get_url_from_timestamp()
 		else:
@@ -88,7 +88,7 @@ def shorts_put():
 		print "db_long_url: ", db_long_url
 		if db_long_url == long_url:
 			prefix = "URL pair is already matched"
-		else:	
+		else:
 			prefix = "URL is already taken."
 			shortened_url = ''
 	return flask.render_template(

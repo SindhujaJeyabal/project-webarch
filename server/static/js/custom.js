@@ -8,7 +8,7 @@ function(data) {
 
 document.getElementById("submit").disabled = true;
 
-function validateURL(){
+function validateLongURL(){
    var lurl = document.getElementById('longURL');
    document.getElementById('shortURL').value = "";
    if(isUrl(lurl.value)){
@@ -24,10 +24,23 @@ function validateURL(){
 
 };
 
+function validateShortURL(){
+   var surl = document.getElementById('shortURL');
+   if(isSUrl(surl.value)){
+      document.getElementById("submit").disabled = false;
+      surl.style.backgroundColor = "#B1FFB1"
+   }else{
+      document.getElementById("submit").disabled = true;
+      surl.placeholder = "Only letters are allowed in a short URL";
+      surl.value = "";
+      surl.style.backgroundColor = "#FFB6B3";
+   }
+
+};
+
 function genShort() {
    var surl = document.getElementById('shortURL');
    var tt = new Date().getTime();
-   console.log(tt);
    var digits = [];
    var letters = [];
    var remainder = 0;
@@ -52,8 +65,13 @@ function genShort() {
       }
       letters[letters.length] = String.fromCharCode(ascii_code);
    }
-   console.log(letters.join(""));
    surl.value = letters.join("");
+};
+
+function isSUrl(s) {
+   var regexp = /^(?!.*[0-9])[a-zA-Z]+/;
+   console.log(regexp.test(s));
+   return regexp.test(s);
 };
 
 function isUrl(s) {

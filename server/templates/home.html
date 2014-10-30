@@ -35,7 +35,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="longURL">Long URL</label>
 							<div class="col-md-10">
-								<input id="longURL" name="longURL" type="text" placeholder="Long URL" class="form-control" onfocusout="validateURL()">
+								<input id="longURL" name="longURL" type="text" placeholder="Long URL" class="form-control" onfocusout="validateLongURL()">
 							</div>
 						</div>
 
@@ -43,7 +43,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="shortURL">Short URL</label>
 							<div class="col-md-10">
-								<input id="shortURL" name="shortURL" type="text" placeholder="Short URL" class="form-control">
+								<input id="shortURL" name="shortURL" type="text" placeholder="Short URL" class="form-control" onkeyup="validateShortURL()">
 							</div>
 						</div>
 

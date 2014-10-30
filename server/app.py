@@ -97,4 +97,4 @@ def shorts_put():
 
 
 if __name__ == "__main__":
-    app.run()#port=int(environ['FLASK_PORT']))
+    app.run(port=int(environ['FLASK_PORT']))

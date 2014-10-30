@@ -15,7 +15,7 @@ import math
 
 app = flask.Flask(__name__)
 app.debug = True
-ROOT_URL = "http://127.0.0.1:5000/server/shorts/"
+ROOT_URL = "http://people.ischool.berkeley.edu/~carlos/project-webarch/server/shorts/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())

@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html lang="en-us">
-	<head>
-		<meta charset="utf-8">
-		<title>memeoke</title>
-		<link rel="stylesheet" href="static/css/default.css">
-	</head>
-	<body>
-		<div class="container">
-			<span> {{prefix}} </span>
-			{% for url in urllist %}
-			<div>
-				<a href={{ url }}> {{url}} </a>
+<head>
+	<meta charset="utf-8">
+	<title>MEMEOKE</title>
+	<link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css">
+	<link rel="stylesheet" href="../static/css/default.css">
+	<link rel="stylesheet" href="../static/css/fonts.css">
+</head>
+<body>
+		<div class="container-fluid">
+			<div class="row meme-header">
+				<div class="col-md-12">
+					<h1 class="home-header">NaNaNa Doge!</h1>
+					<div id="test"></div>
+				</div>
 			</div>
-			{% endfor %}
 		</div>
-	</body>
+
+		<div class="container content">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+
+					<h1 class="text-center"><strong> {{prefix}} </strong></h1>
+					{% for url in urllist %}
+					<div class="text-center">
+						<h3><a href="{{ url }}"> {{url}} </a></h3>
+					</div>
+					{% endfor %}
+
+					<br/><br/>
+					<p class="text-center">
+						<a href="http://127.0.0.1:5000/" class="btn btn-primary btn-lg" role="button">Shorten Another URL!</a>
+					</p>
+				</div>
+			</div>
+		</div><!-- /.container -->
+	<!-- <div id="test"></div> --><!-- /#test -->
+
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.min.js"></script>
+	<script src="../static/js/custom.js"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="../static/js/ie10-viewport-bug-workaround.js"></script>
+</body>
 </html>
+

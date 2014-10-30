@@ -31,7 +31,7 @@ function validateShortURL(){
       surl.style.backgroundColor = "#B1FFB1"
    }else{
       document.getElementById("submit").disabled = true;
-      surl.placeholder = "Only letters are allowed in a short URL";
+      surl.placeholder = "Only letters are allowed in a short URL, no numbers";
       surl.value = "";
       surl.style.backgroundColor = "#FFB6B3";
    }
@@ -69,7 +69,7 @@ function genShort() {
 };
 
 function isSUrl(s) {
-   var regexp = /^(?!.*[0-9])[a-zA-Z]+/;
+   var regexp = /^(?!.*[0-9 ])[a-zA-Z]+/;
    console.log(regexp.test(s));
    return regexp.test(s);
 };

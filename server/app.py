@@ -52,10 +52,14 @@ def page_not_found(e):
 @app.route('/server/shorts/<short_url>')
 def shorts_get(short_url):
 	destination = getlongurlfromdb(short_url)
+	print 'longURL: ', destination
 	if destination == '':
 		print "URL not found"
 		abort(404)
+		return
 		# return flask.render_template('output.html', prefix = "URL not found", url='')
+	if not (destination.startswith('http://') or destination.startswith('https://')):
+		destination = 'http://' + destination
 	return flask.redirect(destination)
 
 @app.route('/server/shorts', methods=['PUT', 'POST'])

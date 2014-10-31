@@ -12,7 +12,7 @@ from jinja2 import TemplateNotFound
 from flask import abort
 import time
 import math
-
+# app.py
 app = flask.Flask(__name__)
 app.debug = True
 ROOT_URL = "http://people.ischool.berkeley.edu/~ssnipes/server/shorts/"

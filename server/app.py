@@ -15,7 +15,7 @@ import math
 
 app = flask.Flask(__name__)
 app.debug = True
-ROOT_URL = "http://people.ischool.berkeley.edu/~sindhuja/server/shorts/"
+ROOT_URL = "http://people.ischool.berkeley.edu/~ssnipes/server/shorts/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())
@@ -49,7 +49,7 @@ def landing_page():
 def page_not_found(e):
 	return flask.render_template('404.html', prefix = "URL not found", url=''), 404
 
-@app.route('/server/shorts/<short_url>')
+@app.route('/shorts/<short_url>')
 def shorts_get(short_url):
 	destination = getlongurlfromdb(short_url)
 	print 'longURL: ', destination
@@ -62,7 +62,7 @@ def shorts_get(short_url):
 		destination = 'http://' + destination
 	return flask.redirect(destination)
 
-@app.route('/server/shorts', methods=['PUT', 'POST'])
+@app.route('/shorts', methods=['PUT', 'POST'])
 def shorts_put():
 	long_url=request.form.get('longURL')
 	short_url=request.form.get('shortURL')

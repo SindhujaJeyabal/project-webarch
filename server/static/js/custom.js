@@ -5,8 +5,8 @@ function(data) {
   var chosenMeme = data.data[randMeme].images.original.url;
   document.getElementById("test").style.backgroundImage="url('"+chosenMeme+"')";
 });
-
-document.getElementById("submit").disabled = true;
+if (document.getElementById("submit"))
+	document.getElementById("submit").disabled = true;
 
 function validateLongURL(){
    var lurl = document.getElementById('longURL');

@@ -69,7 +69,8 @@ function genShort() {
 };
 
 function isSUrl(s) {
-   var regexp = /^(?!.*[0-9 ])[a-zA-Z]+/;
+   // var regexp = /^(?!\.\*[0-9 ])[a-zA-Z]+/;
+   var regexp = /^[a-zA-Z]+$/;
    console.log(regexp.test(s));
    return regexp.test(s);
 };

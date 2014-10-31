@@ -15,7 +15,7 @@ import math
 
 app = flask.Flask(__name__)
 app.debug = True
-ROOT_URL = "http://127.0.0.1:5000/server/shorts/"
+ROOT_URL = "http://people.ischool.berkeley.edu/~sindhuja/server/shorts/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())
@@ -97,4 +97,4 @@ def shorts_put():
 
 
 if __name__ == "__main__":
-    app.run()#port=int(environ['FLASK_PORT']))
+    app.run(port=int(environ['FLASK_PORT']))

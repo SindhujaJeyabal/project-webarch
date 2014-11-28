@@ -12,10 +12,13 @@ from jinja2 import TemplateNotFound
 from flask import abort
 import time
 import math
+import lrc
+import string
+import json
 
 app = flask.Flask(__name__)
 app.debug = True
-ROOT_URL = "http://people.ischool.berkeley.edu/~ssnipes/server/shorts/"
+SHORT_ROOT_URL = "http://people.ischool.berkeley.edu/~sindhuja/server/shorts/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())
@@ -49,7 +52,10 @@ def landing_page():
 def page_not_found(e):
 	return flask.render_template('404.html', prefix = "URL not found", url=''), 404
 
-@app.route('/shorts/<short_url>')
+@app.errorhandler(500)
+def echonest_success():
+	print 
+@app.route('/server/shorts/<short_url>')
 def shorts_get(short_url):
 	destination = getlongurlfromdb(short_url)
 	print 'longURL: ', destination
@@ -62,7 +68,7 @@ def shorts_get(short_url):
 		destination = 'http://' + destination
 	return flask.redirect(destination)
 
-@app.route('/shorts', methods=['PUT', 'POST'])
+@app.route('/server/shorts', methods=['PUT', 'POST'])
 def shorts_put():
 	long_url=request.form.get('longURL')
 	short_url=request.form.get('shortURL')
@@ -78,7 +84,7 @@ def shorts_put():
             'output.html', prefix = prefix,
             urllist= db_entries)
 
-	shortened_url = ROOT_URL + short_url
+	shortened_url = SHORT_ROOT_URL + short_url
 	ret_type = addurltodb(short_url, long_url)
 	prefix = ''
 	if ret_type:
@@ -95,6 +101,30 @@ def shorts_put():
             'output.html', prefix = prefix,
             urllist=shortened_url.split())
 
+@app.route('/audio.html')
+def showLyrics():
+	lyrics = lrc.readLyrics()
+	all_lines = lyrics.split('\n')
+	time_words = []
+	for line in all_lines:
+		items = line.strip(string.punctuation).split(']')
+		if len(items) > 1:
+			time_words.append((items[0],items[1].strip('\r')))
+	print time_words
+	return flask.render_template('audio.html', lyrics=json.dumps(time_words))
+
+@app.route('/artists.html')
+def topartists():
+	resp = lrc.top_artists()
+	artists = json.dumps(resp)
+	print artists, type(artists)
+	return flask.render_template('test_page.html', artist=artists)
+
+@app.route('/artists.html/<artist_name>')
+def artistsongs():
+	resp = lrc.artist_songs()
+	songs = json.dumps(resp)
+	return flask.render_template('test_page.html', songs=songs)
 
 if __name__ == "__main__":
-    app.run(port=int(environ['FLASK_PORT']))
+    app.run()#(port=int(environ['FLASK_PORT']))

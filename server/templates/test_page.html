@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	</head>
+	<body width="100%" height="100%">
+		<br><br><br>
+		<div width="600px" height="600px" id="dataDiv">
+			Artist: <select id="artists" onchange="song_search()"> </select> <br><br>
+			Songs: <select id="songs"> </select>
+		</div>
+	</body>
+	<script type="text/javascript">
+
+		function show_artists(){
+			jsonResp = jQuery.parseJSON({{artist|safe}});
+			artist_list = jsonResp['response']['artists'];
+
+			var $dl = artist_list.length;
+			$html = '';
+			for(var $i = 0; $i < $dl - 1; ++$i) {
+			    var $keys = Object.keys(artist_list[$i]);
+			    $html += '<option value="' + artist_list[$i]['id'] + '">' + artist_list[$i]['name'] + '</option>';
+			}
+			$('#artists').append($html);
+		}
+
+		// TODO: This does not work! Should figure out ajax.
+		function song_search(){
+			artist_id = $('#artists').value;
+			request = $.ajax({cross_domain: true, url: "http://developer.echonest.com/api/v4/artist/songs",
+		        		data: {api_key: "RTHOBAZ2BBKVRTMKE", id: artist_id, 
+		        				format: "json", start: '0', results: '10'}});
+			
+			request.done(function(response){
+				jsonResp = jQuery.parseJSON({{artist|safe}});
+				song_list = jsonResp['response']['songs'];
+
+				var $dl = song_list.length;
+				$html = '';
+				for(var $i = 0; $i < $dl - 1; ++$i) {
+				    var $keys = Object.keys(song_list[$i]);
+				    $html += '<option value="' + song_list[$i]['id'] + '">' + song_list[$i]['title'] + '</option>';
+				}
+				$('#songs').append($html);
+			})
+
+			request.fail(function(){
+				alert('api call failed');
+			})
+		}
+
+		function show_data(){
+			show_artists();
+		}
+		$(document).ready(show_data);
+	</script>
+</html>

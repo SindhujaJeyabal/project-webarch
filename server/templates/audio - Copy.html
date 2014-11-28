@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	</head>
+	<body width="100%" height="100%">
+		<br><br><br>
+		<div width="600px" height="600px" id="playerdiv">
+			<p id="topline"> {lyrics} </p>
+			<audio controls>
+				<source src="TumMile.mp3" type="audio/mpeg">
+				Your browser does not support the audio element.
+			</audio>
+			<p id="bottomline"> Bye for now! </p>
+			<button id="Play" onclick="changeLyrics()"> Play </button>
+		</div>
+		<script>
+			$( document ).ready( onDocumentLoad );
+
+			// Create the XHR object.
+			function createCORSRequest(method, url) {
+			  var xhr = new XMLHttpRequest();
+			  if ("withCredentials" in xhr) {
+			    // XHR for Chrome/Firefox/Opera/Safari.
+			    xhr.open(method, url, true);
+			  } else if (typeof XDomainRequest != "undefined") {
+			    // XDomainRequest for IE.
+			    xhr = new XDomainRequest();
+			    xhr.open(method, url);
+			  } else {
+			    // CORS not supported.
+			    xhr = null;
+			  }
+			  return xhr;
+			}
+
+			function makeCorsRequest() {
+			  // All HTML5 Rocks properties support CORS.
+			  var url = 'https://github.com/FREDhkust/100000_/blob/master/one%20direction%20-%20what%20makes%20you%20beautiful.lrc';
+
+			  var xhr = createCORSRequest('GET', url);
+			  if (!xhr) {
+			    alert('CORS not supported');
+			    return;
+			  }
+
+			  // Response handlers.
+			  xhr.onload = onLoadComplete;
+
+			  xhr.onerror = function() {
+			    alert('Woops, there was an error making the request.');
+			  };
+
+			  xhr.send();
+			}
+
+			function onLoadComplete(xhr) {
+			  	alert("load complete")
+			    var text = xhr.responseText;
+			    console.log(text);
+			}
+			
+			function onDocumentLoad()
+			{
+				//makeCorsRequest();
+			}
+			function changeLyrics()
+			{
+				document.getElementById('topline').innerHTML = "Lyrics go here";
+			}			
+		</script>
+	</body>
+</html>

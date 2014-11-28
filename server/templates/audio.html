@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	</head>
+	<body width="100%" height="100%">
+		<br><br><br>
+		<div width="600px" height="600px" id="playerdiv">
+			<p id="topline">  </p>
+			<audio id="playbar" onplay="showLyrics()" controls>
+				<source src="http://onedirectionnz.com/wp-content/themes/ODNZ001/mp3/whatmakesyoubeautiful.mp3" type="audio/mpeg">
+				Your browser does not support the audio element.
+			</audio>
+			<p id="bottomline">  </p>
+			<p id='timer'> </p>
+		</div>
+		<script>
+			var currentLine = "";
+			var currentNumber = 0;
+			var prevTimeinMs = 0;
+			function showCurrentLine()
+			{
+				if(currentLine.length == 2)
+				{
+					var currentWords = window.currentLine[1].split(' ');
+					var numWords = currentWords.length;
+					var topNum = Math.floor(numWords/2);
+					var topLine = "";
+					for(i = 0; i < topNum; i++)
+						topLine += currentWords[i] + " ";
+					topLine.trim();
+					var bottomLine = "";
+					for(i = topNum; i < currentWords.length; i++)
+						bottomLine += currentWords[i] + " ";
+					bottomLine.trim();
+					document.getElementById('topline').innerHTML = topLine;
+					document.getElementById('bottomline').innerHTML = bottomLine;
+				}			
+				currentNumber++;
+				if(currentNumber < window.allLyrics.length)
+					timeInMs = (parseFloat(window.currentLine[0].split(':')[0]*60) + parseFloat(window.currentLine[0].split(':')[1]))*1000;	
+					window.currentLine = window.allLyrics[currentNumber];
+					console.log(window.currentLine[0], window.currentLine[1]);
+					setTimeout(showCurrentLine, timeInMs - prevTimeinMs);
+					window.prevTimeinMs = timeInMs;					
+			}
+
+			function showLyrics()
+			{
+				allLyrics = {{lyrics|safe}};
+				if(currentNumber < allLyrics.length)
+					window.currentLine = allLyrics[currentNumber];
+					showCurrentLine();
+			}
+		</script>
+	</body>
+</html>

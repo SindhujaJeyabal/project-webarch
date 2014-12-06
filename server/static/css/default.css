@@ -7,13 +7,14 @@ body {
 	background-color: #FFF;
 	font-family: "Proxima Nova";
 }
+
 #wrapper {
 	width: 100%;
 	height: 100%;
 	background: rgba(234,96,69,0.4);
 	-webkit-animation: pulse 10s infinite alternate;
 }
-/* 
+/*
 @-webkit-keyframes pulse {
 	0% {background-color: rgba(244,78,124,0.7);}
 	25% {background-color: rgba(224,207,129,0.7);}
@@ -51,8 +52,13 @@ body {
 .meme-header {
 	background: rgba(234,96,69,0.3);
 	-webkit-animation: pulse 10s infinite alternate;
-	margin-bottom: 50px;
-	min-height: 450px;
+	min-height: 800px;
+}
+
+.menu {
+	background: yellow;
+	-webkit-animation: pulse 10s infinite alternate;
+	min-height: 800px;
 }
 
 .container-fluid {

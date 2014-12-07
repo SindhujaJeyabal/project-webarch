@@ -6,52 +6,69 @@
 	<body width="100%" height="100%">
 		<br><br><br>
 		<div width="600px" height="600px" id="dataDiv">
-			Artist: <select id="artists" onchange="song_search()"> </select> <br><br>
-			Songs: <select id="songs"> </select>
+			<div id="artists">
+				{% for artist in artists %}
+					<div class="text-center">
+						<h3><a href="tracks.html/{{ artist.artist.artist_id }}"> {{artist.artist.artist_name}} </a></h3>
+					</div>
+				{% endfor %}
+			</div>
+			<div id="songs">
+				{% for track in tracks %}
+					<div class="text-center">
+						<h3><a href="/track.html/{{ track.track.track_id }}"> {{track.track.track_name}} </a></h3>
+					</div>
+				{% endfor %}
+			</div>
+			<div id="lyrics">
+				<p> {{lyrics}} </p>
+			</div>
+			<!-- Artist: <select id="artists" onchange="song_search()"> </select> <br><br>
+			Songs: <select id="songs"> </select> -->
 		</div>
 	</body>
 	<script type="text/javascript">
 
-		function show_artists(){
-			jsonResp = jQuery.parseJSON({{artist|safe}});
-			artist_list = jsonResp['response']['artists'];
+		// function show_artists(){
+		// 	jsonResp = jQuery.parseJSON({{artists|safe}});
+		// 	artist_list = jsonResp['response']['artists'];
 
-			var $dl = artist_list.length;
-			$html = '';
-			for(var $i = 0; $i < $dl - 1; ++$i) {
-			    var $keys = Object.keys(artist_list[$i]);
-			    $html += '<option value="' + artist_list[$i]['id'] + '">' + artist_list[$i]['name'] + '</option>';
-			}
-			$('#artists').append($html);
-		}
+		// 	var $dl = artist_list.length;
+		// 	$html = '';
+		// 	for(var $i = 0; $i < $dl - 1; ++$i) {
+		// 	    var $keys = Object.keys(artist_list[$i]);
+		// 	    $html += '<option value="' + artist_list[$i]['id'] + '">' + artist_list[$i]['name'] + '</option>';
+		// 	}
+		// 	$('#artists').append($html);
+		// }
 
-		// TODO: This does not work! Should figure out ajax.
-		function song_search(){
-			artist_id = $('#artists').value;
-			request = $.ajax({cross_domain: true, url: "http://developer.echonest.com/api/v4/artist/songs",
-		        		data: {api_key: "RTHOBAZ2BBKVRTMKE", id: artist_id, 
-		        				format: "json", start: '0', results: '10'}});
+		// // TODO: This does not work! Should figure out ajax.
+		// function song_search(){
+		// 	artist_id = $('#artists').value;
+		// 	request = $.ajax({cross_domain: true, url: "http://developer.echonest.com/api/v4/artist/songs",
+		//         		data: {api_key: "RTHOBAZ2BBKVRTMKE", id: artist_id, 
+		//         				format: "json", start: '0', results: '10'}});
 			
-			request.done(function(response){
-				jsonResp = jQuery.parseJSON({{artist|safe}});
-				song_list = jsonResp['response']['songs'];
+		// 	request.done(function(response){
+		// 		jsonResp = jQuery.parseJSON({{artist|safe}});
+		// 		song_list = jsonResp['response']['songs'];
 
-				var $dl = song_list.length;
-				$html = '';
-				for(var $i = 0; $i < $dl - 1; ++$i) {
-				    var $keys = Object.keys(song_list[$i]);
-				    $html += '<option value="' + song_list[$i]['id'] + '">' + song_list[$i]['title'] + '</option>';
-				}
-				$('#songs').append($html);
-			})
+		// 		var $dl = song_list.length;
+		// 		$html = '';
+		// 		for(var $i = 0; $i < $dl - 1; ++$i) {
+		// 		    var $keys = Object.keys(song_list[$i]);
+		// 		    $html += '<option value="' + song_list[$i]['id'] + '">' + song_list[$i]['title'] + '</option>';
+		// 		}
+		// 		$('#songs').append($html);
+		// 	})
 
-			request.fail(function(){
-				alert('api call failed');
-			})
-		}
+		// 	request.fail(function(){
+		// 		alert('api call failed');
+		// 	})
+		// }
 
 		function show_data(){
-			show_artists();
+			// show_artists();
 		}
 		$(document).ready(show_data);
 	</script>

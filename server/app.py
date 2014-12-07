@@ -114,17 +114,46 @@ def showLyrics():
 	return flask.render_template('audio.html', lyrics=json.dumps(time_words))
 
 @app.route('/artists.html')
-def topartists():
-	resp = lrc.top_artists()
-	artists = json.dumps(resp)
-	print artists, type(artists)
-	return flask.render_template('test_page.html', artist=artists)
+def mm_topartists():
+	artists = lrc.top_artists()
+	return flask.render_template('test_page.html', artists = artists)
 
-@app.route('/artists.html/<artist_name>')
-def artistsongs():
-	resp = lrc.artist_songs()
-	songs = json.dumps(resp)
-	return flask.render_template('test_page.html', songs=songs)
+@app.route('/tracks.html/<artist_id>')
+def mm_toptracks(artist_id):
+	tracks = lrc.top_tracks(artist_id)
+	return flask.render_template('test_page.html', tracks = tracks)
+
+@app.route('/track.html/<track_id>')
+def mm_tracklyrics(track_id):
+	lyrics = lrc.track_lyrics(track_id)
+	return flask.render_template('test_page.html', lyrics = lyrics)
+
+################################     ECHONEST ##########################################
+
+# @app.route('/artists.html')
+# def topartists():
+# 	resp = lrc.top_artists()
+# 	json_resp = json.loads(resp)
+# 	# print json_resp, type(json_resp)	
+# 	artists = json_resp['response']['artists']
+# 	# print artists, type(artists)
+# 	return flask.render_template('test_page.html', artists = artists)
+
+# @app.route('/tracks.html/<artist_id>')
+# def artistsongs(artist_id):
+# 	resp = lrc.artist_songs(artist_id)
+# 	json_resp = json.loads(resp)
+# 	songs = json_resp['response']['songs']
+# 	print songs, type(songs)
+# 	return flask.render_template('test_page.html', songs = songs, artist_id = artist_id)
+
+# @app.route('/track.html/<artist_id>/<song_id>')
+# def song(artist_id, song_id):
+# 	resp = lrc.artist_songs(artist_id)
+# 	json_resp = json.loads(resp)
+# 	songs = json_resp['response']['songs']
+# 	print songs, type(songs)
+# 	return flask.render_template('test_page.html', songs = songs, artist_id = artist_id)
 
 if __name__ == "__main__":
     app.run()#(port=int(environ['FLASK_PORT']))

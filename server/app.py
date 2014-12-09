@@ -15,6 +15,9 @@ import math
 import lrc
 import string
 import json
+import gify
+import spotify
+import sc
 
 app = flask.Flask(__name__)
 app.debug = True
@@ -116,17 +119,38 @@ def showLyrics():
 @app.route('/artists.html')
 def mm_topartists():
 	artists = lrc.top_artists()
-	return flask.render_template('test_page.html', artists = artists)
+	return flask.render_template('test_page.html', artists = artists, gifs=list(), soundcloud_id='0')
 
-@app.route('/tracks.html/<artist_id>')
+def load_gifys(artist_name):
+	gifs = gify.top_gifs(artist_name)
+	urllist = list()
+	for i in range(len(gifs)):
+		urllist.append(gifs[i]['images']['original']['url'].encode('utf-8','ignore'))
+	# print urllist[0]
+	return urllist
+	
 def mm_toptracks(artist_id):
-	tracks = lrc.top_tracks(artist_id)
-	return flask.render_template('test_page.html', tracks = tracks)
+	return lrc.top_tracks(artist_id)
 
-@app.route('/track.html/<track_id>')
-def mm_tracklyrics(track_id):
+@app.route('/tracks.html/<artist_id>/<artist_name>')
+def gifys_tracks(artist_id, artist_name):
+	tracks = mm_toptracks(artist_id)
+	# print tracks[0]
+	return flask.render_template('test_page.html', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='0')
+	
+@app.route('/track.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
+def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	lyrics = lrc.track_lyrics(track_id)
-	return flask.render_template('test_page.html', lyrics = lyrics)
+	gifs = load_gifys(artist_name)
+	song_url = ""
+	#print soundcloud_id
+	# if spotify_id != '':
+	# 	song_url = spotify.get_song(spotify_id)
+	if soundcloud_id == '':
+		resp = lrc.track_search(artist_name, track_name)
+		soundcloud_id = resp[message][body][track_list][track][track_soundcloud_id]
+	print "###########sound cloud id is", soundcloud_id
+	return flask.render_template('test_page.html', artist_name = artist_name, lyrics = lyrics, gifs = gifs, soundcloud_id = soundcloud_id)
 
 ################################     ECHONEST ##########################################
 
@@ -154,6 +178,18 @@ def mm_tracklyrics(track_id):
 # 	songs = json_resp['response']['songs']
 # 	print songs, type(songs)
 # 	return flask.render_template('test_page.html', songs = songs, artist_id = artist_id)
+
+# @app.route('/tracks.html/<artist_id>/<artist_name>')
+# def show_gifs(artist_id, artist_name):
+# 	resp = gify.top_gifs(artist_name)
+# 	gifs = json.dumps(resp)
+# 	return flask.render_template('test_page.html', gifs=gifs)
+
+# def play_song(artist_name, song_name):
+# 	resp = lrc.track_search(artist_name, song_name)
+# 	song = spotify.get_song(resp[message][body][track_list][track][track_spotify_id])
+# 	return flask.render_template('test_page.html', song=song)
+
 
 if __name__ == "__main__":
     app.run()#(port=int(environ['FLASK_PORT']))

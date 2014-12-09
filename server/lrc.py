@@ -32,7 +32,7 @@ def album_tracks(album_id):
 	req_url = MM_URL + "album.tracks.get?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
 	"&album_id=" + str(album_id) + "&page=1&page_size=2"
 	json_resp = json.loads(urllib2.urlopen(req_url).read())
-	print json_resp
+	#print json_resp
 	tracks = json_resp['message']['body']['track_list']
 	return tracks
 

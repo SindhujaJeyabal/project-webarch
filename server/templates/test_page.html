@@ -2,73 +2,83 @@
 <html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://connect.soundcloud.com/sdk.js"></script>
 	</head>
 	<body width="100%" height="100%">
+		<img src="" alt="rotating gif" width="600" height="500" id="main_gif"> 
 		<br><br><br>
 		<div width="600px" height="600px" id="dataDiv">
 			<div id="artists">
 				{% for artist in artists %}
 					<div class="text-center">
-						<h3><a href="tracks.html/{{ artist.artist.artist_id }}"> {{artist.artist.artist_name}} </a></h3>
+						<h3><a href="tracks.html/{{ artist.artist.artist_id }}/{{artist.artist.artist_name}}"> {{artist.artist.artist_name}} </a></h3>
 					</div>
 				{% endfor %}
 			</div>
 			<div id="songs">
 				{% for track in tracks %}
 					<div class="text-center">
-						<h3><a href="/track.html/{{ track.track.track_id }}"> {{track.track.track_name}} </a></h3>
+						<h3><a href="/track.html/{{ track.track.track_id }}/{{artist_name}}/{{track.track.track_name}}/{{track.track.track_soundcloud_id}}"> {{track.track.track_name}} </a></h3>
 					</div>
 				{% endfor %}
 			</div>
 			<div id="lyrics">
 				<p> {{lyrics}} </p>
 			</div>
+			
 			<!-- Artist: <select id="artists" onchange="song_search()"> </select> <br><br>
 			Songs: <select id="songs"> </select> -->
 		</div>
+			<br><br>
+			<!-- <input type="submit" value="Submit" onclick="get_gifs(); play_song();"> -->
+		<!-- <iframe src="https://embed.spotify.com/?uri=spotify:track:4th1RQAelzqgY7wL53UGQt" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
 	</body>
 	<script type="text/javascript">
 
-		// function show_artists(){
-		// 	jsonResp = jQuery.parseJSON({{artists|safe}});
-		// 	artist_list = jsonResp['response']['artists'];
+		function get_gifs(){
+			var artist_gifs = {{gifs|safe}};
+			console.log(artist_gifs.length)
+			if($(artist_gifs).length != 0){
+				var gif = document.getElementById('main_gif');
+				console.log('loop?')
+				var num = 0;
+				var changeGif = function() {
+					console.log(artist_gifs[num])
+		    		gif.src = artist_gifs[num++];
+		    		if (num == $(artist_gifs).length) 
+		        		num = 0;
+		        }    			
+	    		setInterval(changeGif, 5000);			
+			}
+		}
 
-		// 	var $dl = artist_list.length;
-		// 	$html = '';
-		// 	for(var $i = 0; $i < $dl - 1; ++$i) {
-		// 	    var $keys = Object.keys(artist_list[$i]);
-		// 	    $html += '<option value="' + artist_list[$i]['id'] + '">' + artist_list[$i]['name'] + '</option>';
-		// 	}
-		// 	$('#artists').append($html);
-		// }
+		
 
-		// // TODO: This does not work! Should figure out ajax.
-		// function song_search(){
-		// 	artist_id = $('#artists').value;
-		// 	request = $.ajax({cross_domain: true, url: "http://developer.echonest.com/api/v4/artist/songs",
-		//         		data: {api_key: "RTHOBAZ2BBKVRTMKE", id: artist_id, 
-		//         				format: "json", start: '0', results: '10'}});
+		function play_sound(){
+			var track_id = {{soundcloud_id}};
+			console.log(track_id)
+
+			if(track_id != '0'){
+			console.log("#######")
+			var common = "/tracks/";
+			var track=common.concat(track_id);
+			console.log(track)
+
+			SC.initialize({
+  			client_id: 'ad364b8f0c461ec82043576b89440ab3'
+			});
+
+			// stream track id 293
+			SC.stream(track, function(sound){
+  			sound.play();
+			});
+		}
+	}
+
 			
-		// 	request.done(function(response){
-		// 		jsonResp = jQuery.parseJSON({{artist|safe}});
-		// 		song_list = jsonResp['response']['songs'];
-
-		// 		var $dl = song_list.length;
-		// 		$html = '';
-		// 		for(var $i = 0; $i < $dl - 1; ++$i) {
-		// 		    var $keys = Object.keys(song_list[$i]);
-		// 		    $html += '<option value="' + song_list[$i]['id'] + '">' + song_list[$i]['title'] + '</option>';
-		// 		}
-		// 		$('#songs').append($html);
-		// 	})
-
-		// 	request.fail(function(){
-		// 		alert('api call failed');
-		// 	})
-		// }
-
 		function show_data(){
-			// show_artists();
+			get_gifs();
+			play_sound();
 		}
 		$(document).ready(show_data);
 	</script>

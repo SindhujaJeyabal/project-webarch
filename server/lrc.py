@@ -24,7 +24,7 @@ def artist_albums(artist_id):
 	"&artist_id=" + str(artist_id) + "&s_release_date=desc&g_album_name=1&page=1&page_size=5"
 	json_resp = json.loads(urllib2.urlopen(req_url).read())
 	albums = json_resp['message']['body']['album_list']
-	# print albums
+	#print albums
 	return albums
 
 def album_tracks(album_id):
@@ -60,9 +60,13 @@ def track_search(artist_name, track_name):
 	req_url = MM_URL + "track.search?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
 	"&q_track=" + track_name + "&q_artist=" + artist_name +"&f_has_lyrics=1&page_size=1"
 	response  = urllib2.urlopen(req_url)
-	tracks = response.read()
-	print tracks
-	return tracks
+	tracks = json.loads(response.read())
+	#print len(tracks['message']['body']['track_list'])
+	for i in range(len(tracks['message']['body']['track_list'])):
+		if (tracks['message']['body']['track_list'][i]['track']['track_soundcloud_id'] != 0):
+			return tracks['message']['body']['track_list'][i]['track']
+	#print tracks['message']['body']['track_list'][0]['track']
+	return tracks['message']['body']['track_list'][0]['track']
 
 ################################     ECHONEST ##########################################
 

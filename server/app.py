@@ -141,16 +141,16 @@ def gifys_tracks(artist_id, artist_name):
 	
 @app.route('/track.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
 def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
+	print track_name
+	track_name = track_name.split('(', 1)[0]
+	print track_name
 	lyrics = lrc.track_lyrics(track_id)
 	gifs = load_gifys(artist_name)
-	song_url = ""
-	#print soundcloud_id
-	# if spotify_id != '':
-	# 	song_url = spotify.get_song(spotify_id)
-	if soundcloud_id == '':
+	if soundcloud_id == '0':
 		resp = lrc.track_search(artist_name, track_name)
-		soundcloud_id = resp[message][body][track_list][track][track_soundcloud_id]
-	print "###########sound cloud id is", soundcloud_id
+		soundcloud_id = resp['track_soundcloud_id']
+		print resp
+	print "########### sound cloud id is ##########", soundcloud_id
 	return flask.render_template('test_page.html', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
 
 @app.route('/share.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')

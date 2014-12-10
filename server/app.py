@@ -70,13 +70,13 @@ def showLyrics():
 
 @app.route('/artists.html')
 def mm_topartists():
-	artists = lrc.top_artists()
-	return flask.render_template('test_page.html', track_id='0', artists = artists, gifs=list(), soundcloud_id='-1')
+	artists = lrc.top_artists()   
+	return flask.render_template('test_page.html', subheader_val='0', track_id='0', artists = artists, gifs=list(), soundcloud_id='-1')
 
 @app.route('/tracks.html/<artist_id>/<artist_name>')
 def mm_toptracks(artist_id, artist_name):
 	tracks = lrc.top_tracks(artist_id)
-	return flask.render_template('test_page.html', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='-1')
+	return flask.render_template('test_page.html', subheader_val='1', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='-1')
 
 def load_gifys(artist_name):
 	gifs = gify.top_gifs(artist_name)
@@ -94,7 +94,7 @@ def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	lyrics = lrc.track_lyrics(track_id)
 	gifs = load_gifys(artist_name)
 	print "########### sound cloud id is ##########", soundcloud_id
-	return flask.render_template('test_page.html', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
+	return flask.render_template('test_page.html', subheader_val='2', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
 
 @app.route('/share.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
 def shorts_put(track_id, artist_name, track_name, soundcloud_id):

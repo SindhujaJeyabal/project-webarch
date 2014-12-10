@@ -1,36 +1,68 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="http://connect.soundcloud.com/sdk.js"></script>
-	</head>
-	<body width="100%" height="100%">
-		<img src="" alt="rotating gif" width="600" height="500" id="main_gif"> 
-		<br><br><br>
-		<div width="600px" height="600px" id="dataDiv">
-			<div id="artists">
-				{% for artist in artists %}
-					<div class="text-center">
-						<h3><a href="tracks.html/{{ artist.artist.artist_id }}/{{artist.artist.artist_name}}"> {{artist.artist.artist_name}} </a></h3>
-					</div>
-				{% endfor %}
-			</div>
-			<div id="songs">
-				{% for track in tracks %}
-					<div class="text-center">
-						<h3><a href="/track.html/{{ track.track.track_id }}/{{artist_name}}/{{track.track.track_name}}/{{track.track.track_soundcloud_id}}"> {{track.track.track_name}} </a></h3>
-					</div>
-				{% endfor %}
-			</div>
-			<div id="lyrics">
-				{% for lyric in lyrics %}
-					<p> {{lyric}} </p>
-				{% endfor %}
-			</div>
-			<div id="share">
-				<h3><a href="/share.html/{{track_id}}/{{artist_name}}/{{track_name}}/{{soundcloud_id}}" id="share"><img src="http://www.simplesharebuttons.com/images/somacro/email.png"></a></h3>
-			</div>
+  	<head>
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/bootstrap.css" type="text/css">
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/default.css" type="text/css">
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/fonts.css" type="text/css">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script src="http://connect.soundcloud.com/sdk.js"></script>
+  	</head>
+  	<body>
+      <div id="main" style="min-height: 100%;">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-8 meme-header" style="min-height: 100%;">
+               <div id="gif-title">MEMEOKE TIME</div>
+               <div id="test-gif" alt="rotating gif" class="main-gif"></div>
+            </div>
+            <div class="col-md-4 menu" style="min-height: 100%;">
+               <h1>Memeoke</h1>
+               <h3>Memes. Karaoke. Fun.</h3>
+               
+               <div class="main-content">
+                  <div role="tabpanel">
 
+                     <h4 id="subheader"></h4>
+                     <div id="top-artists">
+                        <div class="list-group">
+                           {% for artist in artists %}
+                              <a class="list-group-item" href="tracks.html/{{ artist.artist.artist_id }}/{{artist.artist.artist_name}}"> {{artist.artist.artist_name}}</a>
+                           {% endfor %}
+                        </div>
+                     </div>
+                     
+                     <h4 id="subheader"></h4>
+                     <div id="top-tracks">
+                        <div class="list-group">
+                           {% for track in tracks %}
+                              <a class="list-group-item" href="/track.html/{{ track.track.track_id }}/{{artist_name}}/{{track.track.track_name}}/{{track.track.track_soundcloud_id}}"> {{track.track.track_name}} </a>
+                           {% endfor %}
+                        </div>
+                     </div>
+
+                  </div>
+               
+                  <div id="lyrics">
+                     {% for lyric in lyrics %}
+                        <p> {{lyric}} </p>
+                     {% endfor %}
+                  </div>
+
+                  <div id="share">
+                     <a class="btn btn-large btn-success" href="/share.html/{{track_id}}/{{artist_name}}/{{track_name}}/{{soundcloud_id}}" id="share">Share My Memeoke!</a>
+                  </div>
+                  
+                  <div id="return-home">
+                     <a class="btn btn-default btn-large" href="/artists.html">Return to Home</a>
+                  </div>
+                  
+                  <div id="credit">
+                     <h4>Created by Anubhav Gupta, Sindhuja Jeyabal, Carlos Lasa, and Stephanie Snipes<br/>for INFO 253: Web Architecture</h4>
+                  </div>
+               
+               </div> <!-- //.main-content -->
+               
+            </div>
 			
 			<!-- Artist: <select id="artists" onchange="song_search()"> </select> <br><br>
 			Songs: <select id="songs"> </select> -->
@@ -39,65 +71,85 @@
 			<!-- <input type="submit" value="Submit" onclick="get_gifs(); play_song();"> -->
 		<!-- <iframe src="https://embed.spotify.com/?uri=spotify:track:4th1RQAelzqgY7wL53UGQt" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
 	</body>
-	<script type="text/javascript">
+         
+   <script type="text/javascript">
 
-		function get_gifs(){
-			var artist_gifs = {{gifs|safe}};
-			console.log(artist_gifs.length)
-			if($(artist_gifs).length != 0){
-				var gif = document.getElementById('main_gif');
-				console.log('loop?')
-				var num = 0;
-				gif.src = artist_gifs[num++];
-				var changeGif = function() {
-					console.log(artist_gifs[num])
-		    		gif.src = artist_gifs[num++];
-		    		if (num == $(artist_gifs).length) 
-		        		num = 0;
-		        }    			
-	    		setInterval(changeGif, 5000);			
-			}
-		}
+      function get_gifs(){
+         var artist_gifs = {{gifs|safe}};
+         console.log(artist_gifs.length)
+         if($(artist_gifs).length != 0){
+         var gif = document.getElementById('test-gif');
+         console.log('loop?')
+         var num = 0;
+         var chosenMeme = artist_gifs[num++];
+         gif.style.backgroundImage = 'url("'+chosenMeme+'")';
+         var changeGif = function() {
+            console.log(artist_gifs[num]);
+            var chosenMeme = artist_gifs[num++];
+            console.log(chosenMeme);
+            gif.style.backgroundImage = 'url("'+chosenMeme+'")';
+            if (num == $(artist_gifs).length) 
+              num = 0;
+         }    			
+            setInterval(changeGif, 5000);	
+         }
+      }
 
-		
-
-		function play_sound(){
-			var track_id = {{soundcloud_id}};
-			console.log(track_id)
-
+      function play_sound(){
+         var track_id = {{soundcloud_id}};
+         console.log(track_id)
 			if(track_id == '0')
-				track_id = '107168279';
+				track_id = '107168279'; // Show error
 			if(track_id != '-1'){
 			console.log("#######")
 			var common = "/tracks/";
 			var track=common.concat(track_id);
 			console.log(track)
+            SC.initialize({
+              client_id: 'ad364b8f0c461ec82043576b89440ab3'
+            });
 
-			SC.initialize({
-  			client_id: 'ad364b8f0c461ec82043576b89440ab3'
-			});
+            // stream track id 293
+            SC.stream(track, function(sound){
+              sound.play();
+            });
+         }
+      }
 
-			// stream track id 293
-			SC.stream(track, function(sound){
-  			sound.play();
-			});
-		}
-	}
+      function disable(){
+         console.log("111111111")
+         var track_id={{track_id}};
 
-		function disable(){
-			console.log("111111111")
-			var track_id={{track_id}};
-			if(track_id != '0'){
-			console.log("2222222222")
-    			$('#share').show();
-    		}
-    		else{
-    			console.log("3333333333")
-    			$('#share').hide();
-
-    		}
-		}
-
+         if(track_id != '0'){
+         console.log("2222222222")
+             $('#share').show();
+         } else {
+             console.log("3333333333")
+             $('#share').hide();
+         }
+      }
+      
+      function subheader() {
+         var subheader = document.getElementById("subheader");
+         var topTracks = document.getElementById("top-tracks");
+         var topArtists = document.getElementById("top-artists");
+         var returnHome = document.getElementById("return-home");
+         var subheader_val={{subheader_val}};
+         if (subheader_val == "0"){
+            subheader.innerHTML = 'Select one of our top artists:'
+            topTracks.style.display = 'none';
+            returnHome.style.display = 'none';
+         } else if (subheader_val == "1") {
+            subheader.innerHTML = 'Select one of their top songs:'
+            topArtists.style.display = 'none';
+         } else {
+            subheader.innerHTML = ''
+            topTracks.style.display = 'none';
+            topArtists.style.display = 'none';
+            document.getElementById("gif-title").style.display = 'none';
+            console.log(subheader_val)
+         }
+      }
 		function show_data(){
 			play_sound();
 			get_gifs();

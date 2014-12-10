@@ -1,18 +1,23 @@
 html, body {
-	width: 100%;
-	height: 100%;
+   width: 100%;
+   height: 100%;
 }
 body {
-	margin:0px;
-	background-color: #FFF;
-	font-family: "Proxima Nova";
+   margin:0px;
+   background-color: #FFF;
+   font-family: "Proxima Nova";
+}
+
+#main {
+   height: 100%;
+   height: 100vh;
 }
 
 #wrapper {
-	width: 100%;
-	height: 100%;
-	background: rgba(234,96,69,0.4);
-	-webkit-animation: pulse 10s infinite alternate;
+   width: 100%;
+   height: 100%;
+   background: rgba(234,96,69,0.4);
+   -webkit-animation: pulse 10s infinite alternate;
 }
 /*
 @-webkit-keyframes pulse {
@@ -24,56 +29,84 @@ body {
 }
  */
 #test {
-	width: 100%;
-	min-height: 450px;
-	background-repeat: no-repeat;
-	background-size: cover;
-	opacity: 0.9;
-	z-index: -9999;
-	background-position: 20% 20%;
-	position: absolute;
-	top: 0;
+   width: 100%;
+   min-height: 450px;
+   background-repeat: no-repeat;
+   background-size: cover;
+   opacity: 0.9;
+   z-index: -9999;
+   background-position: 20% 20%;
+   position: absolute;
+   top: 0;
 }
 
 .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
+   position: relative;
+   height: auto;
+   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
+   padding: 10px;
+   font-size: 16px;
 }
 
 .navbar-inverse {
-	border-radius: 0px !important;
+   border-radius: 0px !important;
 }
 
 .meme-header {
-	background: rgba(234,96,69,0.3);
-	-webkit-animation: pulse 10s infinite alternate;
-	min-height: 800px;
+   background-color: #222;
+   -webkit-animation: pulse 10s infinite alternate;
+   min-height: 100%;
+   position: absolute;
+   left: 0;
+   padding: 0;
+}
+
+#test-gif {
+   background-image: url("http://i.giphy.com/10we3R8dLZQ7hS.gif");
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: 50%;
+   position: absolute;
+   top: 0;
+   width: 100%;
+   height: 100%;
 }
 
 .menu {
-	background: yellow;
-	-webkit-animation: pulse 10s infinite alternate;
-	min-height: 800px;
+   background-image: url("../img/concert-bokeh.jpg");
+   background-size: cover;
+   background-color: #222;
+   background-position:90%;
+   -webkit-animation: pulse 10s infinite alternate;
+   min-height: 100%;
+   position: absolute;
+   right: 0;
+   padding: 20px 50px 20px 30px;
+}
+
+a.list-group-item {
+   transition: background-color 0.5s ease;
+}
+
+a.list-group-item:hover {
+   background-color: #eee;
 }
 
 .container-fluid {
-	padding-right: 0;
-	padding-left: 0;
+   padding-right: 0;
+   padding-left: 0;
 }
 
 .home-header {
-	font-weight: bold;
-	text-align: center;
-	font-size: 95px;
-	padding-top: 155px;
-	color: white;
+   font-weight: bold;
+   text-align: center;
+   font-size: 95px;
+   padding-top: 155px;
+   color: white;
 }
 
 .content {
-	padding-top: 10px;
+   padding-top: 10px;
 }

@@ -70,7 +70,8 @@ def showLyrics():
 
 @app.route('/artists.html')
 def mm_topartists():
-	artists = lrc.top_artists()   
+	# artists = lrc.top_artists()   
+	artists = lrc.artist_search()
 	return flask.render_template('test_page.html', subheader_val='0', track_id='0', artists = artists, gifs=list(), soundcloud_id='-1')
 
 @app.route('/tracks.html/<artist_id>/<artist_name>')

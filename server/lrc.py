@@ -11,6 +11,18 @@ RESPONSE_FORMAT = "json"
 MM_KEY = "1ae163cbc0f747a01f5a396acc059197"
 MM_URL = "http://api.musixmatch.com/ws/1.1/"
 
+def artist_search():
+	artist_name = ['Justin Timberlake', 'Britney Spears', 'Justin Bieber', 'One Direction', 'NSync', 'Backstreet Boys'
+			'Spice Girls', 'Psy', 'Miley Cyrus', 'Rick Astley']
+	artists = list()
+	for artist in artist_name:
+		artist = artist.replace(' ', '%20')
+		req_url = MM_URL + "artist.search?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
+		"&q_artist=" + artist +"&page_size=1"
+		json_resp = json.loads(urllib2.urlopen(req_url).read())
+		artists.extend(json_resp['message']['body']['artist_list'])
+	print artists
+	return artists
 #top artists
 def top_artists():
 	req_url = MM_URL + "chart.artists.get?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \

@@ -157,7 +157,7 @@ def shorts_put(track_id, artist_name, track_name, soundcloud_id):
 	track_name=track_name.replace(' ', '%20')
 	long_url="/track.html/"+track_id+"/"+artist_name+"/"+track_name+"/"+soundcloud_id
 	print long_url
-	short_url=track_name
+	short_url=get_url_from_timestamp()
 	print short_url
 
 	shortened_url = SHORT_ROOT_URL + short_url

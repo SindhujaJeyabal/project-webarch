@@ -19,44 +19,59 @@ def top_artists():
 	artists = json_resp['message']['body']['artist_list']	
 	return artists
 
-def artist_albums(artist_id):
+def artist_albums(artist_id, page_num=1):
 	req_url = MM_URL + "artist.albums.get?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
-	"&artist_id=" + str(artist_id) + "&s_release_date=desc&g_album_name=1&page=1&page_size=5"
+	"&artist_id=" + str(artist_id) + "&s_release_date=desc&g_album_name=1&page=" + str(page_num) + "&page_size=10"
 	json_resp = json.loads(urllib2.urlopen(req_url).read())
 	albums = json_resp['message']['body']['album_list']
+	available_num = json_resp['message']['header']['available']
 	#print albums
-	return albums
+	return albums, available_num
 
 def album_tracks(album_id):
 	print album_id
 	req_url = MM_URL + "album.tracks.get?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
-	"&album_id=" + str(album_id) + "&page=1&page_size=50"
+	"&album_id=" + str(album_id) # + "&page=1&page_size=50"
 	json_resp = json.loads(urllib2.urlopen(req_url).read())
 	#print json_resp
 	tracks = json_resp['message']['body']['track_list']
-	return tracks
+	available_num = json_resp['message']['header']['available']
+	return tracks, available_num
 
 # Get albums and then get tracks from albums
 # TODO: figure out duplication while appending multiple album results
+def already_present(tracks, track_name):
+	bool_flags = [track_name == track['track']['track_name'] for track in tracks]
+	b_result = True
+	for b in bool_flags:
+		b_result = b or b_result
+	return b_result
+
 def top_tracks(artist_id):
-	album_list = artist_albums(artist_id)
+	page_num = 1
 	track_list = list()
+	# while 1:
+	album_list, avbl_albums = artist_albums(artist_id)
 	for album in album_list:
 	# album = album_list[0]
-		tracks = album_tracks(album['album']['album_id'])
+		tracks, avbl_tracks = album_tracks(album['album']['album_id'])
 		#print tracks
 		for track in tracks:
 			#print track
-			if (track['track']['track_soundcloud_id'] != 0):
-				hit = 0
-				for name in track_list:
-					if track['track']['track_name'] == name['track']['track_name']:
-						hit = 1
-						break
-				if hit == 0:
-					track_list.append(track)
-					if len(track_list) == 10:
-						return track_list
+			# if track['track']['track_soundcloud_id'] != 0 and not already_present(track_list, track['track']['track_name']) :
+				# hit = 0
+				# for name in track_list:
+				# 	if track['track']['track_name'] == name['track']['track_name']:
+				# 		hit = 1
+				# 		break
+				# if hit == 0:
+			track_list.append(track)
+			if len(track_list) == 10:
+				return track_list
+		# page_num += 1
+		# print page_num
+		# if page_num > 5:
+		# 	break
 	print track_list	
 	return track_list
 
@@ -64,8 +79,9 @@ def track_lyrics(track_id):
 	req_url = MM_URL + "track.lyrics.get?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
 	"&track_id=" + str(track_id)
 	json_resp = json.loads(urllib2.urlopen(req_url).read())
-	lyrics = json_resp['message']['body']['lyrics']['lyrics_body']	
-	return lyrics
+	lyrics = json_resp['message']['body']['lyrics']['lyrics_body']
+	ly_list = lyrics.split('\n')
+	return ly_list
 
 # For potential search functionality
 def track_search(artist_name, track_name):

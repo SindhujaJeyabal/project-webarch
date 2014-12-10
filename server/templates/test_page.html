@@ -23,7 +23,9 @@
 				{% endfor %}
 			</div>
 			<div id="lyrics">
-				<p> {{lyrics}} </p>
+				{% for lyric in lyrics %}
+					<p> {{lyric}} </p>
+				{% endfor %}
 			</div>
 			<div id="share">
 				<h3><a href="/share.html/{{track_id}}/{{artist_name}}/{{track_name}}/{{soundcloud_id}}" id="share"><img src="http://www.simplesharebuttons.com/images/somacro/email.png"></a></h3>

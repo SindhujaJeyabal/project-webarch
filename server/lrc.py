@@ -30,7 +30,7 @@ def artist_albums(artist_id):
 def album_tracks(album_id):
 	print album_id
 	req_url = MM_URL + "album.tracks.get?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
-	"&album_id=" + str(album_id) + "&page=1&page_size=2"
+	"&album_id=" + str(album_id) + "&page=1&page_size=50"
 	json_resp = json.loads(urllib2.urlopen(req_url).read())
 	#print json_resp
 	tracks = json_resp['message']['body']['track_list']
@@ -43,7 +43,21 @@ def top_tracks(artist_id):
 	track_list = list()
 	for album in album_list:
 	# album = album_list[0]
-		track_list.extend(album_tracks(album['album']['album_id']))	
+		tracks = album_tracks(album['album']['album_id'])
+		#print tracks
+		for track in tracks:
+			#print track
+			if (track['track']['track_soundcloud_id'] != 0):
+				hit = 0
+				for name in track_list:
+					if track['track']['track_name'] == name['track']['track_name']:
+						hit = 1
+						break
+				if hit == 0:
+					track_list.append(track)
+					if len(track_list) == 10:
+						return track_list
+	print track_list	
 	return track_list
 
 def track_lyrics(track_id):
@@ -62,9 +76,9 @@ def track_search(artist_name, track_name):
 	response  = urllib2.urlopen(req_url)
 	tracks = json.loads(response.read())
 	#print len(tracks['message']['body']['track_list'])
-	for i in range(len(tracks['message']['body']['track_list'])):
-		if (tracks['message']['body']['track_list'][i]['track']['track_soundcloud_id'] != 0):
-			return tracks['message']['body']['track_list'][i]['track']
+	# for i in range(len(tracks['message']['body']['track_list'])):
+	# 	if (tracks['message']['body']['track_list'][i]['track']['track_soundcloud_id'] != 0):
+	# 		return tracks['message']['body']['track_list'][i]['track']
 	#print tracks['message']['body']['track_list'][0]['track']
 	return tracks['message']['body']['track_list'][0]['track']
 

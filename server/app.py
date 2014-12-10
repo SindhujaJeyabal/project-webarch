@@ -122,23 +122,21 @@ def mm_topartists():
 	artists = lrc.top_artists()
 	return flask.render_template('test_page.html', track_id='0', artists = artists, gifs=list(), soundcloud_id='0')
 
+def mm_toptracks(artist_id):
+	return lrc.top_tracks(artist_id)
+@app.route('/tracks.html/<artist_id>/<artist_name>')
+def gifys_tracks(artist_id, artist_name):
+	tracks = mm_toptracks(artist_id)
+	# print tracks[0]
+	return flask.render_template('test_page.html', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='0')
+
 def load_gifys(artist_name):
 	gifs = gify.top_gifs(artist_name)
 	urllist = list()
 	for i in range(len(gifs)):
 		urllist.append(gifs[i]['images']['original']['url'].encode('utf-8','ignore'))
 	# print urllist[0]
-	return urllist
-	
-def mm_toptracks(artist_id):
-	return lrc.top_tracks(artist_id)
-
-@app.route('/tracks.html/<artist_id>/<artist_name>')
-def gifys_tracks(artist_id, artist_name):
-	tracks = mm_toptracks(artist_id)
-	# print tracks[0]
-	return flask.render_template('test_page.html', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='0')
-	
+	return urllist	
 @app.route('/track.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
 def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	print track_name
@@ -146,10 +144,10 @@ def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	print track_name
 	lyrics = lrc.track_lyrics(track_id)
 	gifs = load_gifys(artist_name)
-	if soundcloud_id == '0':
-		resp = lrc.track_search(artist_name, track_name)
-		soundcloud_id = resp['track_soundcloud_id']
-		print resp
+	# if soundcloud_id == '0':
+	# 	resp = lrc.track_search(artist_name, track_name)
+	# 	soundcloud_id = resp['track_soundcloud_id']
+	# 	print resp
 	print "########### sound cloud id is ##########", soundcloud_id
 	return flask.render_template('test_page.html', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
 

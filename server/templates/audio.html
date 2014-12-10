@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/bootstrap.css" type="text/css">
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/default.css" type="text/css">
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/fonts.css" type="text/css">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script src="http://connect.soundcloud.com/sdk.js"></script>
 	</head>
 	<body width="100%" height="100%">
-		<br><br><br>
-		<div width="600px" height="600px" id="playerdiv">
-			<p id="topline">  </p>
-			<img src="" alt="GIPHY" width="600" height="500" id="main_gif" position="left:50%"> 
-			<audio id="playbar" autoplay onplay="showCurrentLine()" style="display:none" controls>
-				<source src="http://onedirectionnz.com/wp-content/themes/ODNZ001/mp3/whatmakesyoubeautiful.mp3" type="audio/mpeg">
-				Your browser does not support the audio element.
-			</audio>
-			<p id="bottomline">  </p>
-			<p id='timer'> </p>
+		<div class="container-fluid">
+      <div id="topline-wrapper">
+         <p id="topline">  </p>
+      </div>
+      <div id="test-gif" alt="rotating gif" class="main-gif"></div> 
+      <audio id="playbar" autoplay onplay="showCurrentLine()" style="display:none" controls>
+       <source src="http://onedirectionnz.com/wp-content/themes/ODNZ001/mp3/whatmakesyoubeautiful.mp3" type="audio/mpeg">
+       Your browser does not support the audio element.
+      </audio>
+      <div id="bottomline-wrapper">
+         <p id="bottomline">  </p>
+         <p id='timer'> </p>
+      </div>
 		</div>
+    
+    
 		<script>
 			var currentLine = "";
 			var currentNumber = -1;
@@ -46,22 +55,27 @@
 					window.prevTimeinMs = timeInMs;					
 			}
 
-			function get_gifs(){
-				var artist_gifs = {{gifs|safe}};
-				console.log(artist_gifs.length)
-				if($(artist_gifs).length != 0){
-					var gif = document.getElementById('main_gif');
-					console.log('loop?')
-					var num = 0;
-					var changeGif = function() {
-						console.log(artist_gifs[num])
-			    		gif.src = artist_gifs[num++];
-			    		if (num == $(artist_gifs).length) 
-			        		num = 0;
-			        }    			
-		    		setInterval(changeGif, 5000);			
-				}
-			}
+   function get_gifs(){
+      var artist_gifs = {{gifs|safe}};
+      console.log(artist_gifs.length)
+      if($(artist_gifs).length != 0){
+      var gif = document.getElementById('test-gif');
+      console.log('loop?')
+      var num = 0;
+      var changeGif = function() {
+         console.log(artist_gifs[num])
+
+         var chosenMeme = artist_gifs[num++];
+         console.log(chosenMeme);
+         gif.style.backgroundImage = 'url("'+chosenMeme+'")';
+
+         if (num == $(artist_gifs).length) 
+           num = 0;
+      }    			
+         setInterval(changeGif, 5000);	
+      }
+   }
+   
 			function process_lyrics()
 			{
 				window.allLyrics = {{lyrics|safe}};

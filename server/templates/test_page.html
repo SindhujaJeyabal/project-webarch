@@ -48,6 +48,7 @@
 				var gif = document.getElementById('main_gif');
 				console.log('loop?')
 				var num = 0;
+				gif.src = artist_gifs[num++];
 				var changeGif = function() {
 					console.log(artist_gifs[num])
 		    		gif.src = artist_gifs[num++];
@@ -98,8 +99,8 @@
 		}
 
 		function show_data(){
-			get_gifs();
 			play_sound();
+			get_gifs();
 			disable();
 		}
 		$(document).ready(show_data);

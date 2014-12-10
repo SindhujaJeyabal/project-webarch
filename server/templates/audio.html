@@ -7,7 +7,8 @@
 		<br><br><br>
 		<div width="600px" height="600px" id="playerdiv">
 			<p id="topline">  </p>
-			<audio id="playbar" onplay="showLyrics()" controls>
+			<img src="" alt="GIPHY" width="600" height="500" id="main_gif" position="left:50%"> 
+			<audio id="playbar" autoplay onplay="showCurrentLine()" style="display:none" controls>
 				<source src="http://onedirectionnz.com/wp-content/themes/ODNZ001/mp3/whatmakesyoubeautiful.mp3" type="audio/mpeg">
 				Your browser does not support the audio element.
 			</audio>
@@ -16,11 +17,11 @@
 		</div>
 		<script>
 			var currentLine = "";
-			var currentNumber = 0;
+			var currentNumber = -1;
 			var prevTimeinMs = 0;
 			function showCurrentLine()
 			{
-				if(currentLine.length == 2)
+				if(window.currentLine.length == 2)
 				{
 					var currentWords = window.currentLine[1].split(' ');
 					var numWords = currentWords.length;
@@ -36,22 +37,38 @@
 					document.getElementById('topline').innerHTML = topLine;
 					document.getElementById('bottomline').innerHTML = bottomLine;
 				}			
-				currentNumber++;
-				if(currentNumber < window.allLyrics.length)
+				window.currentNumber++;
+				window.currentLine = window.allLyrics[window.currentNumber];
+				if(window.currentNumber < window.allLyrics.length)
 					timeInMs = (parseFloat(window.currentLine[0].split(':')[0]*60) + parseFloat(window.currentLine[0].split(':')[1]))*1000;	
-					window.currentLine = window.allLyrics[currentNumber];
 					console.log(window.currentLine[0], window.currentLine[1]);
-					setTimeout(showCurrentLine, timeInMs - prevTimeinMs);
+					setTimeout(showCurrentLine, timeInMs - window.prevTimeinMs);
 					window.prevTimeinMs = timeInMs;					
 			}
 
-			function showLyrics()
-			{
-				allLyrics = {{lyrics|safe}};
-				if(currentNumber < allLyrics.length)
-					window.currentLine = allLyrics[currentNumber];
-					showCurrentLine();
+			function get_gifs(){
+				var artist_gifs = {{gifs|safe}};
+				console.log(artist_gifs.length)
+				if($(artist_gifs).length != 0){
+					var gif = document.getElementById('main_gif');
+					console.log('loop?')
+					var num = 0;
+					var changeGif = function() {
+						console.log(artist_gifs[num])
+			    		gif.src = artist_gifs[num++];
+			    		if (num == $(artist_gifs).length) 
+			        		num = 0;
+			        }    			
+		    		setInterval(changeGif, 5000);			
+				}
 			}
+			function process_lyrics()
+			{
+				window.allLyrics = {{lyrics|safe}};
+				get_gifs();
+			}
+
+			$(document).ready(process_lyrics);
 		</script>
 	</body>
 </html>

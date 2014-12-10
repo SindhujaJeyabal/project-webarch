@@ -64,7 +64,9 @@
 			var track_id = {{soundcloud_id}};
 			console.log(track_id)
 
-			if(track_id != '0'){
+			if(track_id == '0')
+				track_id = '107168279';
+			if(track_id != '-1'){
 			console.log("#######")
 			var common = "/tracks/";
 			var track=common.concat(track_id);

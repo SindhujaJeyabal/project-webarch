@@ -56,56 +56,7 @@ def landing_page():
 def page_not_found(e):
 	return flask.render_template('404.html', prefix = "URL not found", url=''), 404
 
-@app.errorhandler(500)
-def echonest_success():
-	print 
-# @app.route('/server/shorts/<short_url>')
-# def shorts_get(short_url):
-# 	destination = getlongurlfromdb(short_url)
-# 	print 'longURL: ', destination
-# 	if destination == '':
-# 		print "URL not found"
-# 		abort(404)
-# 		return
-# 		# return flask.render_template('output.html', prefix = "URL not found", url='')
-# 	if not (destination.startswith('http://') or destination.startswith('https://')):
-# 		destination = 'http://' + destination
-# 	return flask.redirect(destination)
-
-# @app.route('/server/shorts', methods=['PUT', 'POST'])
-# def shorts_put():
-# 	long_url=request.form.get('longURL')
-# 	short_url=request.form.get('shortURL')
-# 	if short_url == '':
-# 		db_entries = getallentries(long_url)
-# 		db_entries = [ROOT_URL + url for url in db_entries]
-
-# 		if len(db_entries) == 0:
-# 			short_url = get_url_from_timestamp()
-# 		else:
-# 			prefix = "URL pair is already matched"
-# 			return flask.render_template(
-#             'output.html', prefix = prefix,
-#             urllist= db_entries)
-
-# 	shortened_url = SHORT_ROOT_URL + short_url
-# 	ret_type = addurltodb(short_url, long_url)
-# 	prefix = ''
-# 	if ret_type:
-# 		prefix = "Your new url is:"
-# 	else:
-# 		db_long_url = getlongurlfromdb(short_url)
-# 		print "db_long_url: ", db_long_url
-# 		if db_long_url == long_url:
-# 			prefix = "URL pair is already matched"
-# 		else:
-# 			prefix = "URL is already taken."
-# 			shortened_url = ''
-# 	return flask.render_template(
-#             'output.html', prefix = prefix,
-#             urllist=shortened_url.split())
-
-@app.route('/audio.html')
+@app.route('/demo.html')
 def showLyrics():
 	lyrics = lrc.readLyrics()
 	all_lines = lyrics.split('\n')
@@ -114,21 +65,18 @@ def showLyrics():
 		items = line.strip(string.punctuation).split(']')
 		if len(items) > 1:
 			time_words.append((items[0],items[1].strip('\r')))
-	print time_words
-	return flask.render_template('audio.html', lyrics=json.dumps(time_words))
+	gifs = load_gifys("One%20Direction")
+	return flask.render_template('audio.html', lyrics=json.dumps(time_words), gifs = gifs)
 
 @app.route('/artists.html')
 def mm_topartists():
 	artists = lrc.top_artists()
-	return flask.render_template('test_page.html', track_id='0', artists = artists, gifs=list(), soundcloud_id='0')
+	return flask.render_template('test_page.html', track_id='0', artists = artists, gifs=list(), soundcloud_id='-1')
 
-def mm_toptracks(artist_id):
-	return lrc.top_tracks(artist_id)
 @app.route('/tracks.html/<artist_id>/<artist_name>')
-def gifys_tracks(artist_id, artist_name):
-	tracks = mm_toptracks(artist_id)
-	# print tracks[0]
-	return flask.render_template('test_page.html', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='0')
+def mm_toptracks(artist_id, artist_name):
+	tracks = lrc.top_tracks(artist_id)
+	return flask.render_template('test_page.html', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='-1')
 
 def load_gifys(artist_name):
 	gifs = gify.top_gifs(artist_name)
@@ -136,7 +84,8 @@ def load_gifys(artist_name):
 	for i in range(len(gifs)):
 		urllist.append(gifs[i]['images']['original']['url'].encode('utf-8','ignore'))
 	# print urllist[0]
-	return urllist	
+	return urllist
+
 @app.route('/track.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
 def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	print track_name
@@ -144,10 +93,6 @@ def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	print track_name
 	lyrics = lrc.track_lyrics(track_id)
 	gifs = load_gifys(artist_name)
-	# if soundcloud_id == '0':
-	# 	resp = lrc.track_search(artist_name, track_name)
-	# 	soundcloud_id = resp['track_soundcloud_id']
-	# 	print resp
 	print "########### sound cloud id is ##########", soundcloud_id
 	return flask.render_template('test_page.html', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
 

@@ -41,11 +41,17 @@ def album_tracks(album_id):
 # Get albums and then get tracks from albums
 # TODO: figure out duplication while appending multiple album results
 def already_present(tracks, track_name):
-	bool_flags = [track_name == track['track']['track_name'] for track in tracks]
-	b_result = True
-	for b in bool_flags:
-		b_result = b or b_result
-	return b_result
+	# bool_flags = [track_name == track['track']['track_name'] for track in tracks]
+	# b_result = True
+	# for b in bool_flags:
+	# 	b_result = b or b_result
+	# return b_result
+	hit = 0
+	for track in tracks:
+		if track['track']['track_name'] == track_name:
+			hit = 1
+			break
+	return (hit == 1)
 
 def top_tracks(artist_id):
 	page_num = 1
@@ -58,14 +64,8 @@ def top_tracks(artist_id):
 		#print tracks
 		for track in tracks:
 			#print track
-			# if track['track']['track_soundcloud_id'] != 0 and not already_present(track_list, track['track']['track_name']) :
-				# hit = 0
-				# for name in track_list:
-				# 	if track['track']['track_name'] == name['track']['track_name']:
-				# 		hit = 1
-				# 		break
-				# if hit == 0:
-			track_list.append(track)
+			if not already_present(track_list, track['track']['track_name']): #track['track']['track_soundcloud_id'] != 0 and 
+				track_list.append(track)
 			if len(track_list) == 10:
 				return track_list
 		# page_num += 1

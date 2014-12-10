@@ -12,8 +12,8 @@
       <div class="container-fluid">
          <div class="row">
             <div class="col-md-8 meme-header" style="min-height: 100%;">
-               <div id="gif-title">MEMEOKE TIME</div>
                <div id="test-gif" alt="rotating gif" class="main-gif"></div>
+               <div id="gif-title">MEMEOKE TIME</div>
             </div>
             <div class="col-md-4 menu" style="min-height: 100%;">
                <h1>Memeoke</h1>
@@ -84,8 +84,8 @@
          var chosenMeme = artist_gifs[num++];
          gif.style.backgroundImage = 'url("'+chosenMeme+'")';
          var changeGif = function() {
-            console.log(artist_gifs[num]);
-            var chosenMeme = artist_gifs[num++];
+//            console.log(artist_gifs[num]);
+            chosenMeme = artist_gifs[num++];
             console.log(chosenMeme);
             gif.style.backgroundImage = 'url("'+chosenMeme+'")';
             if (num == $(artist_gifs).length) 
@@ -134,7 +134,9 @@
          var topTracks = document.getElementById("top-tracks");
          var topArtists = document.getElementById("top-artists");
          var returnHome = document.getElementById("return-home");
-         var subheader_val={{subheader_val}};
+         var gifTitle = document.getElementById("gif-title");
+         var subheader_val={{subheader_val|safe}};
+         console.log("subheader_val" + subheader_val);
          if (subheader_val == "0"){
             subheader.innerHTML = 'Select one of our top artists:'
             topTracks.style.display = 'none';
@@ -146,7 +148,7 @@
             subheader.innerHTML = ''
             topTracks.style.display = 'none';
             topArtists.style.display = 'none';
-            document.getElementById("gif-title").style.display = 'none';
+            gifTitle.style.display = 'none';
             console.log(subheader_val)
          }
       }
@@ -154,6 +156,7 @@
 			play_sound();
 			get_gifs();
 			disable();
+   subheader();
 		}
 		$(document).ready(show_data);
 	</script>

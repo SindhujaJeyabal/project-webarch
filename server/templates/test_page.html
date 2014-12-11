@@ -100,8 +100,9 @@
       function play_sound(){
          var track_id = {{soundcloud_id}};
          console.log(track_id)
-			if(track_id == '0')
-				track_id = '107168279'; // Show error
+			if(track_id == '0'){
+				//track_id = '107168279';
+        return false;} // Show error
 			if(track_id != '-1'){
 			console.log("#######")
 			var common = "/tracks/";
@@ -115,7 +116,9 @@
             SC.stream(track, function(sound){
               sound.play();
             });
+          return true;
          }
+        return true;
       }
 
       function disable(){
@@ -129,6 +132,11 @@
              console.log("3333333333")
              $('#share').hide();
          }
+      }
+
+      function display_error(){
+        document.getElementById("gif-title").innerHTML = "Oh No! This song is not available to stream. Please go back and choose another song";
+        document.getElementById("lyrics").style.display = 'none'
       }
       
       function subheader() {
@@ -155,10 +163,16 @@
          }
       }
 		function show_data(){
-			play_sound();
-			get_gifs();
+			var rc = play_sound();
+      if (rc == true)
+        get_gifs();
+      else
+        display_error();
 			disable();
-   subheader();
+      subheader();
+      if (rc == false){
+        document.getElementById("gif-title").style.display = 'initial'
+      }
 		}
 		$(document).ready(show_data);
 	</script>

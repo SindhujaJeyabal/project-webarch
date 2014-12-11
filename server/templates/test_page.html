@@ -17,11 +17,9 @@
                <div id="gif-title" >MEMEOKE TIME</div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 menu">
-              <h1>
-               <a href="/">Memeoke</a>
-              </h1>
-               <h3>Memes! Karaoke! Fun!</h3>
-               
+               <a href="/"><img src="../static/img/memeoke_logo_banner_white.png" style="width:350px">
+               </a>
+
                <div class="main-content">
                   <div role="tabpanel">
 
@@ -33,7 +31,7 @@
                            {% endfor %}
                         </div>
                      </div>
-                     
+
                      <h4 id="subheader"></h4>
                      <div id="top-tracks">
                         <div class="list-group">
@@ -44,7 +42,7 @@
                      </div>
 
                   </div>
-                              
+
                   <div id="lyrics">
                      <h4><strong>{{artist_name}} &#8211; {{track_name}}</strong></h4>
 
@@ -57,11 +55,11 @@
                   <div id="share">
                      <a class="btn btn-large btn-success" href="/share.html/{{track_id}}/{{artist_name}}/{{track_name}}/{{soundcloud_id}}" id="share">Share My Memeoke!</a>
                   </div>
-                  
+
                   <div id="return-home">
                      <a class="btn btn-default btn-large" href="/artists.html">Select Another Artist &amp; Song</a>
                   </div>
-                  
+
                   <div id="credit">
                      <h4>Created by Anubhav Gupta, Sindhuja Jeyabal,<br/>Carlos Lasa, and Stephanie Snipes<br/><strong>INFO 253: Web Architecture</strong></h4>
                   </div>
@@ -69,18 +67,18 @@
                   <div>
                      <p position="right:0">Powered by Musixmatch, Giphy, Soundcloud</p>
                   </div>
-               
+
                </div> <!-- //.main-content -->
-               
+
             </div>
-			
+
 			<!-- Artist: <select id="artists" onchange="song_search()"> </select> <br><br>
 			Songs: <select id="songs"> </select> -->
 		</div>
 			<!-- <input type="submit" value="Submit" onclick="get_gifs(); play_song();"> -->
 		<!-- <iframe src="https://embed.spotify.com/?uri=spotify:track:4th1RQAelzqgY7wL53UGQt" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
 	</body>
-         
+
    <script type="text/javascript">
 
       function get_gifs(){
@@ -96,10 +94,10 @@
             chosenMeme = artist_gifs[num++];
             console.log(chosenMeme);
             gif.style.backgroundImage = 'url("'+chosenMeme+'")';
-            if (num == $(artist_gifs).length) 
+            if (num == $(artist_gifs).length)
               num = 0;
-         }    			
-            setInterval(changeGif, 5000);	
+         }
+            setInterval(changeGif, 5000);
          }
       }
 
@@ -143,7 +141,7 @@
         document.getElementById("gif-title").innerHTML = "Oh no! This song is not available to stream. Please go back and choose another song.";
         document.getElementById("lyrics").style.display = 'none'
       }
-      
+
       function subheader() {
          var subheader = document.getElementById("subheader");
          var topTracks = document.getElementById("top-tracks");

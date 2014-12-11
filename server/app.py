@@ -126,7 +126,7 @@ def shorts_put(track_id, artist_name, track_name, soundcloud_id):
 
 @app.route('/<short_url>')
 def shorts_get(short_url):
-	print "#############"
+	# print "#############"
 	short_url=short_url.replace(' ', '%20')
 	print short_url
 	destination = getlongurlfromdb(short_url)
@@ -141,5 +141,5 @@ def shorts_get(short_url):
 	return flask.redirect(destination)
 
 if __name__ == "__main__":
-    app.run()#(port=int(environ['FLASK_PORT']))
+    app.(port=int(environ['FLASK_PORT']))
  

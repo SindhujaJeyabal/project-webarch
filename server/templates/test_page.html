@@ -65,6 +65,10 @@
                   <div id="credit">
                      <h4>Created by Anubhav Gupta, Sindhuja Jeyabal,<br/>Carlos Lasa, and Stephanie Snipes<br/><strong>INFO 253: Web Architecture</strong></h4>
                   </div>
+                  <br><br><br>
+                  <div>
+                     <p position="right:0">Powered by Musixmatch, Giphy, Soundcloud</p>
+                  </div>
                
                </div> <!-- //.main-content -->
                
@@ -84,7 +88,6 @@
          console.log(artist_gifs.length)
          if($(artist_gifs).length != 0){
          var gif = document.getElementById('test-gif');
-         console.log('loop?')
          var num = 0;
          var chosenMeme = artist_gifs[num++];
          gif.style.backgroundImage = 'url("'+chosenMeme+'")';
@@ -107,7 +110,6 @@
           //track_id = '107168279';
               return false;} // Show error
          if(track_id != '-1'){
-         console.log("#######")
          var common = "/tracks/";
          var track=common.concat(track_id);
          console.log(track)
@@ -125,14 +127,14 @@
       }
 
       function disable(){
-         console.log("111111111")
+         // console.log("111111111")
          var track_id={{track_id}};
 
          if(track_id != '0'){
-         console.log("2222222222")
+         // console.log("2222222222")
              $('#share').show();
          } else {
-             console.log("3333333333")
+             // console.log("3333333333")
              $('#share').hide();
          }
       }

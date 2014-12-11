@@ -140,45 +140,6 @@ def shorts_get(short_url):
 		destination = 'http://' + destination
 	return flask.redirect(destination)
 
-################################     ECHONEST ##########################################
-
-# @app.route('/artists.html')
-# def topartists():
-# 	resp = lrc.top_artists()
-# 	json_resp = json.loads(resp)
-# 	# print json_resp, type(json_resp)	
-# 	artists = json_resp['response']['artists']
-# 	# print artists, type(artists)
-# 	return flask.render_template('test_page.html', artists = artists)
-
-# @app.route('/tracks.html/<artist_id>')
-# def artistsongs(artist_id):
-# 	resp = lrc.artist_songs(artist_id)
-# 	json_resp = json.loads(resp)
-# 	songs = json_resp['response']['songs']
-# 	print songs, type(songs)
-# 	return flask.render_template('test_page.html', songs = songs, artist_id = artist_id)
-
-# @app.route('/track.html/<artist_id>/<song_id>')
-# def song(artist_id, song_id):
-# 	resp = lrc.artist_songs(artist_id)
-# 	json_resp = json.loads(resp)
-# 	songs = json_resp['response']['songs']
-# 	print songs, type(songs)
-# 	return flask.render_template('test_page.html', songs = songs, artist_id = artist_id)
-
-# @app.route('/tracks.html/<artist_id>/<artist_name>')
-# def show_gifs(artist_id, artist_name):
-# 	resp = gify.top_gifs(artist_name)
-# 	gifs = json.dumps(resp)
-# 	return flask.render_template('test_page.html', gifs=gifs)
-
-# def play_song(artist_name, song_name):
-# 	resp = lrc.track_search(artist_name, song_name)
-# 	song = spotify.get_song(resp[message][body][track_list][track][track_spotify_id])
-# 	return flask.render_template('test_page.html', song=song)
-
-
 if __name__ == "__main__":
     app.run()#(port=int(environ['FLASK_PORT']))
  

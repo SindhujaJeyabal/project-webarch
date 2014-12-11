@@ -12,7 +12,7 @@ MM_KEY = "1ae163cbc0f747a01f5a396acc059197"
 MM_URL = "http://api.musixmatch.com/ws/1.1/"
 
 def artist_search():
-	artist_name = ['Justin Timberlake', 'Britney Spears', 'Justin Bieber', 'Sia', 'Jennifer Lopez', 'Pitbull', 'Miley Cyrus', 'Rick Astley']
+	artist_name = ['Lana Del Rey', 'Britney Spears', 'Justin Bieber', 'Childish Gambino', 'Taylor Swift', 'Miley Cyrus', 'Rick Astley']
 	artists = list()
 	for artist in artist_name:
 		artist = artist.replace(' ', '%20')

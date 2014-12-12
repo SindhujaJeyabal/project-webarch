@@ -307,3 +307,22 @@ longURL:  http://jblomo.github.io/webarch253/
     <<<<<<< HEAD
      ^
 SyntaxError: invalid syntax
+ * Running on http://127.0.0.1:63032/
+ * Restarting with reloader
+ * Running on http://127.0.0.1:63032/
+ * Restarting with reloader
+127.0.0.1 - - [11/Dec/2014 16:43:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:43:58] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:44:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:44:09] "GET /artists.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:44:14] "GET /artists.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:44:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:44:22] "GET /tracks.html/359/Britney%20Spears HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:44:57] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:45:14] "GET /artists.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:45:30] "GET /tracks.html/513697/Childish%20Gambino HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:45:45] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:47:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:47:18] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:48:02] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Dec/2014 16:49:00] "GET / HTTP/1.1" 200 -

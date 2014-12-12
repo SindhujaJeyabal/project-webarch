@@ -17,7 +17,7 @@
                <div id="gif-title" >MEMEOKE TIME</div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 menu">
-               <a href="/"><img src="../static/img/memeoke_logo_banner_white.png" style="width:350px">
+               <a href="/"><img src="http://people.ischool.berkeley.edu/~ssnipes/img/memeoke_logo_banner_white.png" style="width:350px">
                </a>
 
                <div class="main-content">
@@ -36,8 +36,10 @@
                      <div id="top-tracks">
                         <div class="list-group">
                            {% for track in tracks %}
+			   {% if track.track.track_soundcloud_id != 0 %}
                               <a class="list-group-item" href="/track.html/{{ track.track.track_id }}/{{artist_name}}/{{track.track.track_name}}/{{track.track.track_soundcloud_id}}"> {{track.track.track_name}} </a>
-                           {% endfor %}
+                           {% endif %}
+			   {% endfor %}
                         </div>
                      </div>
 
@@ -66,9 +68,9 @@
                   <br><br><br>
                   <div>
                      <p position="right:0" align="center">Powered by: <br><br>
-                        <img src="../static/img/logo_soundcloud_monochrome.png" style="height:40px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="../static/img/logo_musixmatch_monochrome.png" style="height:25px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="../static/img/logo_giphy_monochrome.png" style="height:50px">
+                        <img src="http://people.ischool.berkeley.edu/~ssnipes/img/logo_soundcloud_monochrome.png" style="height:40px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="http://people.ischool.berkeley.edu/~ssnipes/img/logo_musixmatch_monochrome.png" style="height:25px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="http://people.ischool.berkeley.edu/~ssnipes/img/logo_giphy_monochrome.png" style="height:50px">
                         </p>
                   </div>
 
@@ -141,10 +143,6 @@
          }
       }
 
-      function display_error(){
-        document.getElementById("gif-title").innerHTML = "Oh no! This song is not available to stream. Please go back and choose another song.";
-        document.getElementById("lyrics").style.display = 'none'
-      }
 
       function subheader() {
          var subheader = document.getElementById("subheader");
@@ -174,16 +172,10 @@
       }
 		function show_data(){
 			var rc = play_sound();
-      if (rc == true)
-        get_gifs();
-      else
-        display_error();
-			disable();
-      subheader();
-      if (rc == false){
-        document.getElementById("gif-title").style.display = 'initial'
-      }
-		}
+        	get_gifs();
+		disable();
+		subheader();
+	}
 		$(document).ready(show_data);
 	</script>
 </html>

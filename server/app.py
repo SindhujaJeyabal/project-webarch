@@ -16,13 +16,12 @@ import lrc
 import string
 import json
 import gify
-import spotify
 import sc
 
 app = flask.Flask(__name__)
 app.debug = True
-#SHORT_ROOT_URL = "http://people.ischool.berkeley.edu/~sindhuja/server/shorts/"
-SHORT_ROOT_URL = "http://127.0.0.1:5000/"
+SHORT_ROOT_URL = "http://people.ischool.berkeley.edu/~ssnipes/server/shorts/"
+#SHORT_ROOT_URL = "http://127.0.0.1:5000/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())
@@ -126,7 +125,6 @@ def shorts_put(track_id, artist_name, track_name, soundcloud_id):
 
 @app.route('/<short_url>')
 def shorts_get(short_url):
-	# print "#############"
 	short_url=short_url.replace(' ', '%20')
 	print short_url
 	destination = getlongurlfromdb(short_url)
@@ -135,11 +133,9 @@ def shorts_get(short_url):
 		print "URL not found"
 		abort(404)
 		return
-		# return flask.render_template('output.html', prefix = "URL not found", url='')
 	if not (destination.startswith('http://') or destination.startswith('https://')):
 		destination = 'http://' + destination
 	return flask.redirect(destination)
 
 if __name__ == "__main__":
-    app.(port=int(environ['FLASK_PORT']))
- 
+    app.run(port=int(environ['FLASK_PORT']))

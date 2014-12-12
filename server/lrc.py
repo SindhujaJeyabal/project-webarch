@@ -1,5 +1,6 @@
 import urllib2
 import json
+import urllib
 # Read lyrics from a url
 def readLyrics():
 	response = urllib2.urlopen('http://people.ischool.berkeley.edu/~sindhuja/song.lrc')
@@ -12,10 +13,10 @@ MM_KEY = "1ae163cbc0f747a01f5a396acc059197"
 MM_URL = "http://api.musixmatch.com/ws/1.1/"
 
 def artist_search():
-	artist_name = ['Lana Del Rey', 'Britney Spears', 'Justin Bieber', 'Childish Gambino', 'Taylor Swift', 'Miley Cyrus', 'Rick Astley']
+	artist_name = ['Britney Spears', 'Justin Bieber', 'Childish Gambino', 'Taylor Swift', 'Miley Cyrus', 'Rick Astley']
 	artists = list()
 	for artist in artist_name:
-		artist = artist.replace(' ', '%20')
+		artist = urllib.pathname2url(artist)	
 		req_url = MM_URL + "artist.search?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
 		"&q_artist=" + artist +"&page_size=1"
 		json_resp = json.loads(urllib2.urlopen(req_url).read())
@@ -85,8 +86,8 @@ def track_lyrics(track_id):
 
 # For potential search functionality
 def track_search(artist_name, track_name):
-	artist_name.replace(' ', '%20')
-	track_name.replace(' ', '%20')
+	artist_name = urllib.pathname2url(artist_name)
+	track_name = urllib.pathname2url(track_name)
 	req_url = MM_URL + "track.search?apikey=" + MM_KEY + "&format=" + RESPONSE_FORMAT + \
 	"&q_track=" + track_name + "&q_artist=" + artist_name +"&f_has_lyrics=1&page_size=1"
 	response  = urllib2.urlopen(req_url)

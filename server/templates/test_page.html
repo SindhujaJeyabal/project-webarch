@@ -17,7 +17,7 @@
                <div id="gif-title" >MEMEOKE TIME</div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4 menu">
-               <a href="/"><img src="http://people.ischool.berkeley.edu/~ssnipes/img/memeoke_logo_banner_white.png" style="width:350px">
+               <a href="http://people.ischool.berkeley.edu/~ssnipes/server/"><img src="http://people.ischool.berkeley.edu/~ssnipes/img/memeoke_logo_banner_white.png" style="width:350px">
                </a>
 
                <div class="main-content">
@@ -27,7 +27,7 @@
                      <div id="top-artists">
                         <div class="list-group">
                            {% for artist in artists %}
-                              <a class="list-group-item" href="tracks.html/{{ artist.artist.artist_id }}/{{artist.artist.artist_name}}"> {{artist.artist.artist_name}}</a>
+                              <a class="list-group-item" href="http://people.ischool.berkeley.edu/~ssnipes/server/tracks.html/{{ artist.artist.artist_id }}/{{artist.artist.artist_name}}"> {{artist.artist.artist_name}}</a>
                            {% endfor %}
                         </div>
                      </div>
@@ -37,7 +37,7 @@
                         <div class="list-group">
                            {% for track in tracks %}
 			   {% if track.track.track_soundcloud_id != 0 %}
-                              <a class="list-group-item" href="/track.html/{{ track.track.track_id }}/{{artist_name}}/{{track.track.track_name}}/{{track.track.track_soundcloud_id}}"> {{track.track.track_name}} </a>
+                              <a class="list-group-item" href="http://people.ischool.berkeley.edu/~ssnipes/server/track.html/{{ track.track.track_id }}/{{artist_name}}/{{track.track.track_name}}/{{track.track.track_soundcloud_id}}"> {{track.track.track_name}} </a>
                            {% endif %}
 			   {% endfor %}
                         </div>
@@ -55,11 +55,11 @@
                   </div>
 
                   <div id="share">
-                     <a class="btn btn-large btn-success" href="/share.html/{{track_id}}/{{artist_name}}/{{track_name}}/{{soundcloud_id}}" id="share">Share My Memeoke!</a>
+                     <a class="btn btn-large btn-success" href="http://people.ischool.berkeley.edu/~ssnipes/server/share.html/{{track_id}}/{{artist_name}}/{{track_name}}/{{soundcloud_id}}" id="share">Share My Memeoke!</a>
                   </div>
 
                   <div id="return-home">
-                     <a class="btn btn-default btn-large" href="/artists.html">Select Another Artist &amp; Song</a>
+                     <a class="btn btn-default btn-large" href="http://people.ischool.berkeley.edu/~ssnipes/server/artists.html">Select Another Artist &amp; Song</a>
                   </div>
 
                   <div id="credit">

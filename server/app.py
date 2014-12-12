@@ -97,10 +97,10 @@ def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
 	return flask.render_template('test_page.html', subheader_val='2', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
 
 @app.route('/share.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
-def shorts_put(track_id, artist_name, track_name, soundcloud_id):
-	artist_name=artist_name.replace(' ', '%20')
-	track_name=track_name.replace(' ', '%20')
-	long_url="/track.html/"+track_id+"/"+artist_name+"/"+track_name+"/"+soundcloud_id
+def shorts_put(track_id,artist_name, track_name, soundcloud_id):
+	#artist_name=artist_name.replace(' ', '%20')
+	#track_name=track_name.replace(' ', '%20')
+	long_url="http://people.ischool.berkeley.edu/~ssnipes/server/track.html/"+track_id+"/"+artist_name+"/"+track_name+"/"+soundcloud_id
 	print long_url
 	short_url=get_url_from_timestamp()
 	print short_url
@@ -123,7 +123,7 @@ def shorts_put(track_id, artist_name, track_name, soundcloud_id):
             'output.html', prefix = prefix,
             urllist=shortened_url.split())
 
-@app.route('/<short_url>')
+@app.route('/shorts/<short_url>')
 def shorts_get(short_url):
 	short_url=short_url.replace(' ', '%20')
 	print short_url

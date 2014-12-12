@@ -1,48 +1,42 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-	<meta charset="utf-8">
-	<title>MEMEOKE</title>
-	<link rel="stylesheet" href="../server/static/css/bootstrap.css" type="text/css">
-	<link rel="stylesheet" href="../server/static/css/default.css">
-	<link rel="stylesheet" href="../server/static/css/fonts.css">
-</head>
-<body>
-		<div class="container-fluid">
-			<div class="row meme-header">
-				<div class="col-md-12">
-					<h1 class="home-header">NaNaNa Doge!</h1>
-					<div id="test"></div>
-				</div>
-			</div>
-		</div>
+<html>
+  	<head>
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/bootstrap.css" type="text/css">
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/default.css" type="text/css">
+     <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/fonts.css" type="text/css">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script src="http://connect.soundcloud.com/sdk.js"></script>
+  	</head>
+  	<body>
+      <div id="main">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-md-12 meme-header">
+                  
+                  <div class="share-text text-center">
+                     <h1 class="text-center"><strong> {{prefix}} </strong></h1>
+                     {% for url in urllist %}
+                        <h3><a href="{{ url }}"> {{url}} </a></h3>
+                     {% endfor %} 
 
-		<div class="container content">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
+                     <a href="/artists.html" class="btn btn-success btn-lg btn-another" role="button">Create Another MEMEOKE!</a>
+                  </div>
+                  
+                  <div id="test-gif" alt="rotating gif" class="main-gif"></div>
+                  
+                  <div id="output-credit">
+                     <h4 class="text-center">Brought to you by <strong>MEMEOKE</strong></h4>
+                  </div>
+                  
+               </div>
+            </div>
+         </div><!-- /.container -->
+      </div>
 
-					<h1 class="text-center"><strong> {{prefix}} </strong></h1>
-					{% for url in urllist %}
-					<div class="text-center">
-						<h3><a href="{{ url }}"> {{url}} </a></h3>
-					</div>
-					{% endfor %}
-
-					<br/><br/>
-					<p class="text-center">
-						<a href="http://people.ischool.berkeley.edu/~ssnipes/server" class="btn btn-primary btn-lg" role="button">Shorten Another URL!</a>
-					</p>
-				</div>
-			</div>
-		</div><!-- /.container -->
-
-	<!-- Bootstrap core JavaScript
-	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="../server/static/js/bootstrap.min.js"></script>
-	<script src="../server/static/js/custom.js"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../server/static/js/ie10-viewport-bug-workaround.js"></script>
-</body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<!--    <script src="../server/static/js/ie10-viewport-bug-workaround.js"></script>-->
+   </body>
 </html>

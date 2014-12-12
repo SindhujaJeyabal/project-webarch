@@ -12,10 +12,16 @@ from jinja2 import TemplateNotFound
 from flask import abort
 import time
 import math
-# app.py
+import lrc
+import string
+import json
+import gify
+import sc
+
 app = flask.Flask(__name__)
 app.debug = True
-ROOT_URL = "http://people.ischool.berkeley.edu/~ssnipes/server/shorts/"
+SHORT_ROOT_URL = "http://people.ischool.berkeley.edu/~ssnipes/server/shorts/"
+#SHORT_ROOT_URL = "http://127.0.0.1:5000/"
 
 def get_url_from_timestamp():
 	tt = int(time.time())
@@ -49,36 +55,58 @@ def landing_page():
 def page_not_found(e):
 	return flask.render_template('404.html', prefix = "URL not found", url=''), 404
 
-@app.route('/shorts/<short_url>')
-def shorts_get(short_url):
-	destination = getlongurlfromdb(short_url)
-	print 'longURL: ', destination
-	if destination == '':
-		print "URL not found"
-		abort(404)
-		return
-		# return flask.render_template('output.html', prefix = "URL not found", url='')
-	if not (destination.startswith('http://') or destination.startswith('https://')):
-		destination = 'http://' + destination
-	return flask.redirect(destination)
+@app.route('/demo.html')
+def showLyrics():
+	lyrics = lrc.readLyrics()
+	all_lines = lyrics.split('\n')
+	time_words = []
+	for line in all_lines:
+		items = line.strip(string.punctuation).split(']')
+		if len(items) > 1:
+			time_words.append((items[0],items[1].strip('\r')))
+	gifs = load_gifys("One%20Direction")
+	return flask.render_template('audio.html', lyrics=json.dumps(time_words), gifs = gifs)
 
-@app.route('/shorts', methods=['PUT', 'POST'])
-def shorts_put():
-	long_url=request.form.get('longURL')
-	short_url=request.form.get('shortURL')
-	if short_url == '':
-		db_entries = getallentries(long_url)
-		db_entries = [ROOT_URL + url for url in db_entries]
+@app.route('/artists.html')
+def mm_topartists():
+	# artists = lrc.top_artists()   
+	artists = lrc.artist_search()
+	return flask.render_template('test_page.html', subheader_val='0', track_id='0', artists = artists, gifs=list(), soundcloud_id='-1')
 
-		if len(db_entries) == 0:
-			short_url = get_url_from_timestamp()
-		else:
-			prefix = "URL pair is already matched"
-			return flask.render_template(
-            'output.html', prefix = prefix,
-            urllist= db_entries)
+@app.route('/tracks.html/<artist_id>/<artist_name>')
+def mm_toptracks(artist_id, artist_name):
+	tracks = lrc.top_tracks(artist_id)
+	return flask.render_template('test_page.html', subheader_val='1', track_id='0', artist_name = artist_name, gifs = list(), tracks = tracks, soundcloud_id='-1')
 
-	shortened_url = ROOT_URL + short_url
+def load_gifys(artist_name):
+	gifs = gify.top_gifs(artist_name)
+	urllist = list()
+	for i in range(len(gifs)):
+		urllist.append(gifs[i]['images']['original']['url'].encode('utf-8','ignore'))
+	# print urllist[0]
+	return urllist
+
+@app.route('/track.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
+def mm_tracklyrics(track_id, artist_name, track_name, soundcloud_id):
+	print track_name
+	track_name = track_name.split('(', 1)[0]
+	print track_name
+	lyrics = lrc.track_lyrics(track_id)
+	gifs = load_gifys(artist_name)
+	print "########### sound cloud id is ##########", soundcloud_id
+	return flask.render_template('test_page.html', subheader_val='2', artist_name = artist_name, track_id=track_id, lyrics = lyrics, gifs = gifs, track_name=track_name, soundcloud_id = soundcloud_id)
+
+@app.route('/share.html/<track_id>/<artist_name>/<track_name>/<soundcloud_id>')
+def shorts_put(track_id, artist_name, track_name, soundcloud_id):
+	artist_name=artist_name.replace(' ', '%20')
+	track_name=track_name.replace(' ', '%20')
+	long_url="/track.html/"+track_id+"/"+artist_name+"/"+track_name+"/"+soundcloud_id
+	print long_url
+	short_url=get_url_from_timestamp()
+	print short_url
+
+	shortened_url = SHORT_ROOT_URL + short_url
+	print shortened_url
 	ret_type = addurltodb(short_url, long_url)
 	prefix = ''
 	if ret_type:
@@ -95,6 +123,19 @@ def shorts_put():
             'output.html', prefix = prefix,
             urllist=shortened_url.split())
 
+@app.route('/<short_url>')
+def shorts_get(short_url):
+	short_url=short_url.replace(' ', '%20')
+	print short_url
+	destination = getlongurlfromdb(short_url)
+	print 'longURL: ', destination
+	if destination == '':
+		print "URL not found"
+		abort(404)
+		return
+	if not (destination.startswith('http://') or destination.startswith('https://')):
+		destination = 'http://' + destination
+	return flask.redirect(destination)
 
 if __name__ == "__main__":
     app.run(port=int(environ['FLASK_PORT']))

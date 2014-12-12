@@ -1,77 +1,34 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
-	<meta charset="utf-8">
-	<title>MEMEOKE</title>
-	<link rel="stylesheet" href="server/static/css/bootstrap.css" type="text/css">
-	<link rel="stylesheet" href="server/static/css/default.css">
-	<link rel="stylesheet" href="server/static/css/fonts.css">
-</head>
-<body>
-		<div class="container-fluid">
-			<div class="row meme-header">
-				<div class="col-md-12">
-					<h1 class="home-header">It's Memeoke Time!</h1>
-					<div id="test"></div>
-				</div>
-			</div>
-		</div>
+   <head>
+      <meta charset="utf-8">
+      <title>MEMEOKE</title>
+      <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/bootstrap.css" type="text/css">
+      <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/default.css" type="text/css">
+      <link rel="stylesheet" href="http://people.ischool.berkeley.edu/~ssnipes/files/fonts.css" type="text/css">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="http://connect.soundcloud.com/sdk.js"></script>
+   </head>
+   <body>
+      <div id="test-gif-home">
+         <div class="container-fluid">
+            <div class="landing-page">
+               <img src="http://people.ischool.berkeley.edu/~ssnipes/img/memeoke_logo_square_white.png" style="width:350px">
+            <h1>It's Memeoke Time</h1>
+            <a href="server/demo.html" class="btn btn-home btn-large btn-default">Watch our Synced Lyrics Demo</a>
+            <a href="server/artists.html" class="btn btn-home btn-large btn-success">Get Started with Memeoke</a>
+            </div>
+         </div>
+        </div>
+      </div><!-- // landing-page-bg -->
 
-		<div class="container content">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--    <script src="static/js/bootstrap.min.js"></script>-->
 
-					<div class>
-						<p class="lead text-center">
-							<strong>Please input a URL that you would like to shorten.</strong>
-							<br> Feel free to include your preferred shortened link.</p>
-					</div>
-
-					<div class="well well-sm">
-						<form class="form-horizontal" action="http://people.ischool.berkeley.edu/~ssnipes/server/shorts" method="post">
-							<br/><br/>
-
-							<!-- long URL input-->
-							<div class="form-group">
-								<label class="col-md-2 control-label" for="longURL">Long URL</label>
-								<div class="col-md-10">
-									<input id="longURL" name="longURL" type="text" placeholder="Long URL" class="form-control">
-								</div>
-							</div>
-
-							<!-- short URL input -->
-							<div class="form-group">
-								<label class="col-md-2 control-label" for="shortURL">Short URL</label>
-								<div class="col-md-10">
-									<input id="shortURL" name="shortURL" type="text" placeholder="Short URL" class="form-control" onkeyup="validateShortURL()">
-								</div>
-							</div>
-
-							<!-- Form submit -->
-							<div class="form-group">
-								<div class="col-md-12 text-center">
-									<button type="submit" id="submit" class="btn btn-primary btn-lg">Shorten My URL!</button>
-								</div>
-							</div>
-						</form>
-					</div>
-
-				</div>
-			</div>
-		</div><!-- /.container -->
-
-	<!-- Bootstrap core JavaScript
-	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="server/static/js/bootstrap.min.js"></script>
-	<script src="server/static/js/custom.js"></script>
-	<script>
-	$("#longURL").focusout(function(){
-	  validateLongURL()
-	});
-	</script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="server/static/js/ie10-viewport-bug-workaround.js"></script>
-</body>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+   <!--	<script src="static/js/ie10-viewport-bug-workaround.js"></script>-->
+   </body>
 </html>

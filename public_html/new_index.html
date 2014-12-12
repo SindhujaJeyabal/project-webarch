@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+   <meta charset="utf-8">
+   <title>MEMEOKE</title>
+   <link rel="stylesheet" href="../server/static/css/bootstrap.css" type="text/css">
+   <link rel="stylesheet" href="../server/static/css/default.css">
+   <link rel="stylesheet" href="../server/static/css/fonts.css">
+</head>
+<body>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-md-8 meme-header">
+            <h1>MEMEOKE</h1>
+            <h2>Memes. Karaoke. Fun.</h2>
+         </div>
+         <div class="col-md-4 menu">
+            <h1>MEMEOKE</h1>
+            <h3>Memes. Karaoke. Fun.</h3>
+            <div role="tabpanel">
+               <div class="row">
+                  <div class="col-md-11">
+                     <ul class="nav nav-tabs nav-justified" role="tablist" id="myTab">
+                        <li class="active">
+                           <a href="#topartists" role="tab" data-toggle="tab">Top Artists</a>
+                        </li>
+                        <li>
+                           <a href="#topsongs" role="tab" data-toggle="tab">Top Songs</a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+
+               <!-- Tab panes -->
+               <div class="tab-content col-md-11">
+                  <div role="tabpanel" class="tab-pane active" id="topartists">
+                     <br>
+                     <p> Select one of our top artists:</p>
+                     <div class="list-group">
+                        <a href="#" class="list-group-item">Justin Bieber</a>
+                        <a href="#" class="list-group-item">Selena Gomez</a>
+                        <a href="#" class="list-group-item">Taylor Swift</a>
+                        <a href="#" class="list-group-item">Lorde</a>
+                        <a href="#" class="list-group-item">Ed Sheeran</a>
+                        <a href="#" class="list-group-item">One Direction</a>
+                        <a href="#" class="list-group-item">John Legend</a>
+                        <a href="#" class="list-group-item">Iggy Azalea</a>
+                        <a href="#" class="list-group-item">Sam Smith</a>
+                        <a href="#" class="list-group-item">Ariana Grande</a>
+                     </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="topsongs">
+                     <br>
+                     <p> Select one of our top songs:</p>
+                     <div class="list-group">
+                        <a href="#" class="list-group-item">Blank Space</a>
+                        <a href="#" class="list-group-item">All About That Bass</a>
+                        <a href="#" class="list-group-item">Take Me To Church</a>
+                        <a href="#" class="list-group-item">Shake It Off</a>
+                        <a href="#" class="list-group-item">Animals</a>
+                        <a href="#" class="list-group-item">The Heart Wants What It Wants</a>
+                        <a href="#" class="list-group-item">I'm Not The Only One</a>
+                        <a href="#" class="list-group-item">Uptown Funk</a>
+                        <a href="#" class="list-group-item">Love Me Harder</a>
+                        <a href="#" class="list-group-item">Jealous</a>
+                     </div>
+
+                     <button type="button" class="btn btn-primary btn-block">SING IT!</button>
+
+
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Bootstrap core JavaScript
+   ================================================== -->
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script src="../server/static/js/bootstrap.min.js"></script>
+   <script src="../server/static/js/custom.js"></script>
+   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+   <script src="../server/static/js/ie10-viewport-bug-workaround.js"></script>
+   <script>
+   $('#myTab a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+   })
+   $('#myTab a[href="#topsongs"]').tab('show')
+   $('#myTab a[href="#topartists"]').tab('show')
+   </script>
+</body>
+</html>
